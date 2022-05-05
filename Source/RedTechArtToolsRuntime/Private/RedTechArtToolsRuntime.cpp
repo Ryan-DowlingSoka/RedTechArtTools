@@ -22,7 +22,6 @@
 
 #include "CoreMinimal.h"
 #include "Modules/ModuleManager.h"
-#include "Interfaces/IPluginManager.h"
 #include "IRedTechArtToolsRuntime.h"
 
 class FRedTechArtToolsRuntime final : public IRedTechArtToolsRuntime
