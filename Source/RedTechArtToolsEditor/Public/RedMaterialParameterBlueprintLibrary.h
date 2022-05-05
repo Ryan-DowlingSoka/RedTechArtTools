@@ -38,7 +38,12 @@ struct FRedParameterChannelNamesWrapper
 	GENERATED_USTRUCT_BODY()
 
 	FRedParameterChannelNamesWrapper() = default;
-	FRedParameterChannelNamesWrapper(const FText& InR, const FText& InG, const FText& InB, const FText& InA) : R(InR), G(InG), B(InB), A(InA) {}
+
+	FRedParameterChannelNamesWrapper(const FText& InR, const FText& InG, const FText& InB,
+	                                 const FText& InA) : R(InR), G(InG), B(InB), A(InA)
+	{
+	}
+
 	FRedParameterChannelNamesWrapper(const FParameterChannelNames& ChannelNames)
 	{
 		R = ChannelNames.R;
@@ -49,21 +54,20 @@ struct FRedParameterChannelNamesWrapper
 
 	FParameterChannelNames ToParameterChannelNames() const
 	{
-		return FParameterChannelNames(R,G,B,A);
+		return FParameterChannelNames(R, G, B, A);
 	}
-	
-	
+
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = MaterialExpressionVectorParameter)
 	FText R;
 
-	UPROPERTY(BlueprintReadWrite,  Category = MaterialExpressionVectorParameter)
+	UPROPERTY(BlueprintReadWrite, Category = MaterialExpressionVectorParameter)
 	FText G;
 
-	UPROPERTY(BlueprintReadWrite,  Category = MaterialExpressionVectorParameter)
+	UPROPERTY(BlueprintReadWrite, Category = MaterialExpressionVectorParameter)
 	FText B;
 
-	UPROPERTY(BlueprintReadWrite,  Category = MaterialExpressionVectorParameter)
+	UPROPERTY(BlueprintReadWrite, Category = MaterialExpressionVectorParameter)
 	FText A;
 };
 
@@ -73,6 +77,7 @@ struct REDTECHARTTOOLSEDITOR_API FRedMaterialParameterInfo
 	GENERATED_BODY()
 
 	FRedMaterialParameterInfo() = default;
+
 	explicit FRedMaterialParameterInfo(UMaterialExpression* InExpression)
 	{
 		if (!IsValid(InExpression))
@@ -83,115 +88,139 @@ struct REDTECHARTTOOLSEDITOR_API FRedMaterialParameterInfo
 		ParameterType = InExpression->GetParameterType();
 		InExpression->GetParameterValue(ParameterInfo);
 	}
-	
+
 	UPROPERTY()
 	TWeakObjectPtr<UMaterialExpression> OwningMaterialExpression = nullptr;
 
 	/** Parameter Name for the given material expression. Modify with caution.*/
 	UPROPERTY()
 	FName ParameterName = NAME_None;
-	
+
 	EMaterialParameterType ParameterType = EMaterialParameterType::None;
 
 	FMaterialParameterMetadata ParameterInfo;
 };
 
+
+/**
+ *	Blueprint Library for getting and setting information about Material Parameter Expressions.
+ *	Mostly needed because FMaterialParameterMetadata is not a UStruct(BlueprintType).
+ */
 UCLASS()
 class REDTECHARTTOOLSEDITOR_API URedMaterialParameterBlueprintLibrary : public UBlueprintEditorLibrary
 {
 	GENERATED_BODY()
 public:
-	UFUNCTION(BlueprintCallable)
-	static void RecompileMaterials(TArray<UMaterialInterface*> Materials);
-
-	UFUNCTION(BlueprintCallable)
-	static void RecompileFunctions(TArray<UMaterialFunction*> Functions);
-	
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, Category=MaterialExpressions)
 	static UPARAM(DisplayName="Success?")bool OpenAndFocusMaterialExpression(UMaterialExpression* MaterialExpression);
 
-	UFUNCTION(BlueprintCallable)
+	/** Gets the UObject that contains this material expression, could be a UMaterial* or a UMaterialFunction* */
+	UFUNCTION(BlueprintCallable, Category=MaterialExpressions)
 	static UObject* GetMaterialExpression_OwningObject(UMaterialExpression* MaterialExpression);
 
-	UFUNCTION(BlueprintCallable)
-	static TArray<UMaterialExpression*> GetAllMaterialParameterExpressions(UMaterialInterface* MaterialInterface, bool bExcludeFunctions=false);
+	/**
+	 * Gets all the material parameter expressions from the base material and their contained functions.
+	 * bExcludeFunctions will only get the expressions from the base material and ignore all function
+	 * parameters.
+	 */
+	UFUNCTION(BlueprintCallable, Category=MaterialExpressions)
+	static TArray<UMaterialExpression*> GetAllMaterialParameterExpressions(
+		UMaterialInterface* MaterialInterface, bool bExcludeFunctions = false);
 
-	UFUNCTION(BlueprintCallable)
-	static TArray<UMaterialExpression*> GetAllMaterialParameterExpressionsInFunction(UMaterialFunction* MaterialFunction);
-	
-	UFUNCTION(BlueprintCallable)
+	/** Gets all material parameters in this function.
+	 * bExcludeContainedFunctions will only get the parameters from this function and not recurse into children functions.
+	 */
+	UFUNCTION(BlueprintCallable, Category=MaterialExpressions)
+	static TArray<UMaterialExpression*> GetAllMaterialParameterExpressionsInFunction(
+		UMaterialFunction* MaterialFunction, bool bExcludeContainedFunctions = false);
+
+	/** Gets the MaterialParameterInfo struct, this stores all the current editable data on the parameter expression,
+	 * and provides an interface for changing these properties on the expression.
+	 */
+	UFUNCTION(BlueprintCallable, Category=MaterialExpressions)
 	static FRedMaterialParameterInfo GetMaterialParameterInfo(UMaterialExpression* ParameterExpression);
 
 	/** Gets all commonly used information in the RedMaterialParameterInfo all at once. */
-	UFUNCTION(BlueprintCallable)
-	static UPARAM(DisplayName="Owning Material Expression") UMaterialExpression* BreakMaterialParameterInfo(UPARAM(ref) const FRedMaterialParameterInfo& Info, FName& Name, FName& Group, FString& Description, int32& SortPriority);
-	
-	UFUNCTION(BlueprintCallable)
-	static UMaterialExpression* GetMaterialParameter_OwningMaterialExpression(UPARAM(ref) const FRedMaterialParameterInfo& Info);
-	
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, Category=MaterialExpressions)
+	static UPARAM(DisplayName="Owning Material Expression") UMaterialExpression* BreakMaterialParameterInfo(
+		UPARAM(ref) const FRedMaterialParameterInfo& Info, FName& Name, FName& Group, FString& Description,
+		int32& SortPriority);
+
+	UFUNCTION(BlueprintCallable, Category=MaterialExpressions)
+	static UMaterialExpression* GetMaterialParameter_OwningMaterialExpression(
+		UPARAM(ref) const FRedMaterialParameterInfo& Info);
+
+	UFUNCTION(BlueprintCallable, Category=MaterialExpressions)
 	static FName GetMaterialParameter_Name(UPARAM(ref) const FRedMaterialParameterInfo& Info);
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, Category=MaterialExpressions)
 	static FName GetMaterialParameter_TypeName(UPARAM(ref) const FRedMaterialParameterInfo& Info);
 
-	UFUNCTION(BlueprintCallable)
-	static FRedParameterChannelNamesWrapper GetMaterialParameter_ChannelNames(UPARAM(ref) const FRedMaterialParameterInfo& Info);
-	
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, Category=MaterialExpressions)
+	static FRedParameterChannelNamesWrapper GetMaterialParameter_ChannelNames(
+		UPARAM(ref) const FRedMaterialParameterInfo& Info);
+
+	UFUNCTION(BlueprintCallable, Category=MaterialExpressions)
 	static FName GetMaterialParameter_Group(UPARAM(ref) const FRedMaterialParameterInfo& Info);
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, Category=MaterialExpressions)
 	static FString GetMaterialParameter_Description(UPARAM(ref) const FRedMaterialParameterInfo& Info);
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, Category=MaterialExpressions)
 	static int32 GetMaterialParameter_SortPriority(UPARAM(ref) const FRedMaterialParameterInfo& Info);
 
-	UFUNCTION(BlueprintCallable)
-	static void GetMaterialParameter_ScalarMinMax(UPARAM(ref) const FRedMaterialParameterInfo& Info, float& OutScalarMin, float& OutScalarMax);
+	UFUNCTION(BlueprintCallable, Category=MaterialExpressions)
+	static void GetMaterialParameter_ScalarMinMax(UPARAM(ref) const FRedMaterialParameterInfo& Info,
+	                                              float& OutScalarMin, float& OutScalarMax);
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, Category=MaterialExpressions)
 	static FGuid GetMaterialParameter_ExpressionGUID(UPARAM(ref) const FRedMaterialParameterInfo& Info);
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, Category=MaterialExpressions)
 	static bool GetMaterialParameter_UsedAsAtlasPosition(UPARAM(ref) const FRedMaterialParameterInfo& Info);
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, Category=MaterialExpressions)
 	static bool GetMaterialParameter_UsedAsChannelMask(UPARAM(ref) const FRedMaterialParameterInfo& Info);
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, Category=MaterialExpressions)
 	static bool GetMaterialParameter_Override(UPARAM(ref) const FRedMaterialParameterInfo& Info);
 
-	UFUNCTION(BlueprintCallable)
-	static TSoftObjectPtr<UCurveLinearColor> GetMaterialParameter_ScalarCurve(UPARAM(ref) const FRedMaterialParameterInfo& Info);
+	UFUNCTION(BlueprintCallable, Category=MaterialExpressions)
+	static TSoftObjectPtr<UCurveLinearColor> GetMaterialParameter_ScalarCurve(
+		UPARAM(ref) const FRedMaterialParameterInfo& Info);
 
-	UFUNCTION(BlueprintCallable)
-	static TSoftObjectPtr<UCurveLinearColorAtlas> GetMaterialParameter_ScalarAtlas(UPARAM(ref) const FRedMaterialParameterInfo& Info);
+	UFUNCTION(BlueprintCallable, Category=MaterialExpressions)
+	static TSoftObjectPtr<UCurveLinearColorAtlas> GetMaterialParameter_ScalarAtlas(
+		UPARAM(ref) const FRedMaterialParameterInfo& Info);
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, Category=MaterialExpressions)
 	static void SetMaterialParameter_Name(UPARAM(ref) FRedMaterialParameterInfo& Info, FName Name);
 
-	UFUNCTION(BlueprintCallable)
-	static void SetMaterialParameter_ChannelNames(UPARAM(ref) FRedMaterialParameterInfo& Info, FRedParameterChannelNamesWrapper ChannelNamesWrapper);
-	
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, Category=MaterialExpressions)
+	static void SetMaterialParameter_ChannelNames(UPARAM(ref) FRedMaterialParameterInfo& Info,
+	                                              FRedParameterChannelNamesWrapper ChannelNamesWrapper);
+
+	UFUNCTION(BlueprintCallable, Category=MaterialExpressions)
 	static void SetMaterialParameter_Group(UPARAM(ref) FRedMaterialParameterInfo& Info, FName Group);
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, Category=MaterialExpressions)
 	static void SetMaterialParameter_Description(UPARAM(ref) FRedMaterialParameterInfo& Info, FString Description);
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, Category=MaterialExpressions)
 	static void SetMaterialParameter_SortPriority(UPARAM(ref) FRedMaterialParameterInfo& Info, int32 SortPriority);
 
-	UFUNCTION(BlueprintCallable)
-	static void SetMaterialParameter_ScalarMinMax(UPARAM(ref) FRedMaterialParameterInfo& Info, float ScalarMin, float ScalarMax);
+	UFUNCTION(BlueprintCallable, Category=MaterialExpressions)
+	static void SetMaterialParameter_ScalarMinMax(UPARAM(ref) FRedMaterialParameterInfo& Info, float ScalarMin,
+	                                              float ScalarMax);
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, Category=MaterialExpressions)
 	static void UpdateMaterialParameter_ExpressionGUID(UPARAM(ref) FRedMaterialParameterInfo& Info);
 
-	UFUNCTION(BlueprintCallable)
-	static void SetMaterialParameter_ScalarCurve(UPARAM(ref) FRedMaterialParameterInfo& Info, UCurveLinearColor* ScalarCurve);
+	UFUNCTION(BlueprintCallable, Category=MaterialExpressions)
+	static void SetMaterialParameter_ScalarCurve(UPARAM(ref) FRedMaterialParameterInfo& Info,
+	                                             UCurveLinearColor* ScalarCurve);
 
-	UFUNCTION(BlueprintCallable)
-	static void SetMaterialParameter_ScalarAtlas(UPARAM(ref) FRedMaterialParameterInfo& Info, UCurveLinearColorAtlas* ScalarAtlas);
+	UFUNCTION(BlueprintCallable, Category=MaterialExpressions)
+	static void SetMaterialParameter_ScalarAtlas(UPARAM(ref) FRedMaterialParameterInfo& Info,
+	                                             UCurveLinearColorAtlas* ScalarAtlas);
 };

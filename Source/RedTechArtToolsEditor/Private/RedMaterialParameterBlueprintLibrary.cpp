@@ -31,21 +31,6 @@
 #include "MaterialEditorUtilities.h"
 #include "Subsystems/AssetEditorSubsystem.h"
 
-void URedMaterialParameterBlueprintLibrary::ApplyChangesToMaterials(TArray<UObject*> MaterialsAndFunctions)
-{
-	for(auto* MaterialOrFunction : MaterialsAndFunctions)
-	{
-		if(UMaterialInterface* Material = Cast<UMaterialInterface>(MaterialOrFunction))
-		{
-			
-		}
-		else if(UFunction* Function = Cast<UFunction>(MaterialOrFunction))
-		{
-			
-		}
-	}	
-}
-
 bool URedMaterialParameterBlueprintLibrary::OpenAndFocusMaterialExpression(UMaterialExpression* MaterialExpression)
 {
 	if (UObject* OwningObject = GetMaterialExpression_OwningObject(MaterialExpression))
@@ -119,12 +104,12 @@ TArray<UMaterialExpression*> URedMaterialParameterBlueprintLibrary::GetAllMateri
 }
 
 TArray<UMaterialExpression*> URedMaterialParameterBlueprintLibrary::GetAllMaterialParameterExpressionsInFunction(
-	UMaterialFunction* MaterialFunction)
+	UMaterialFunction* MaterialFunction, bool bExcludeContainedFunctions)
 {
 	TArray<UMaterialExpression*> AllExpressions;
 	TArray<UMaterialExpression*> OutExpressions;
 	MaterialFunction->GetAllExpressionsOfType<UMaterialExpression>(
-		AllExpressions);
+		AllExpressions, !bExcludeContainedFunctions);
 	for (auto* Expression : AllExpressions)
 	{
 		if (Expression->bIsParameterExpression)

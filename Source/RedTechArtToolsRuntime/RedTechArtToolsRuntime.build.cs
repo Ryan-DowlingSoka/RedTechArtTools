@@ -30,7 +30,10 @@ public class RedTechArtToolsRuntime : ModuleRules
                 { 
                     "Core", 
                     "CoreUObject", 
-                    "Engine", 
+                    "Engine",
+                    "UMG",
+                    "SlateCore",
+                    "Slate"
                 });
 
                 PrivateDependencyModuleNames.AddRange(new string[]{ });

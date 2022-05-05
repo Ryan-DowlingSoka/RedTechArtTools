@@ -28,36 +28,39 @@
 
 class UDataTable;
 /**
- *  Blueprint Library for useful Tech Art Tools that are uncategorized.
+ *  Blueprint Library for useful misc Tech Art Tools.
  */
 UCLASS()
 class REDTECHARTTOOLSEDITOR_API URedTechArtToolsBlueprintLibrary : public UBlueprintEditorLibrary
 {
 	GENERATED_BODY()
 public:
-
 	/** Output entire contents of a DataTable as a string */
+	UFUNCTION(BlueprintCallable, Category=DataTable)
 	static FString GetTableAsString(const UDataTable* DataTable, bool bUseJsonObjectsForStructs = false, bool bUseSimpleText = false);
-
+	
 	/** Output entire contents of DataTable as CSV */
+	UFUNCTION(BlueprintCallable, Category=DataTable)
 	static FString GetTableAsCSV(const UDataTable* DataTable, bool bUseJsonObjectsForStructs = false, bool bUseSimpleText = false);
 
+	
 	/** Output entire contents of DataTable as JSON */
+	UFUNCTION(BlueprintCallable, Category=DataTable)
 	static FString GetTableAsJSON(const UDataTable* DataTable, bool bUseJsonObjectsForStructs = false, bool bUseSimpleText = false);
 
 	/** Is A less than or equal to B alphanumerically. */
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, Category=String)
 	static bool AlphaNumericLessThan(UPARAM(ref) FString& A, UPARAM(ref) FString& B);
 	
 	/** Is A less than or equal to B alphanumerically. */
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, Category=String)
 	static bool AlphaNumericLessThanOrEqual(UPARAM(ref) FString& A, UPARAM(ref) FString& B);
 
 	/** Is A less than or equal to B alphanumerically. */
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, Category=String)
 	static bool AlphaNumericGreaterThan(UPARAM(ref) FString& A, UPARAM(ref) FString& B);
 
 	/** Is A less than or equal to B alphanumerically. */
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, Category=String)
 	static bool AlphaNumericGreaterThanOrEqual(UPARAM(ref) FString& A, UPARAM(ref) FString& B);
 };
