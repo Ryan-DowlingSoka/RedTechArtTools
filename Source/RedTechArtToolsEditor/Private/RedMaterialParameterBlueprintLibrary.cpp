@@ -30,6 +30,7 @@
 #include "IMaterialEditor.h"
 #include "MaterialEditorUtilities.h"
 #include "Subsystems/AssetEditorSubsystem.h"
+#include "Toolkits/ToolkitManager.h"
 
 bool URedMaterialParameterBlueprintLibrary::OpenAndFocusMaterialExpression(UMaterialExpression* MaterialExpression)
 {
@@ -39,8 +40,8 @@ bool URedMaterialParameterBlueprintLibrary::OpenAndFocusMaterialExpression(UMate
 		{
 			if (AssetEditorSubsystem->OpenEditorForAsset(OwningObject))
 			{
-				if (const auto MaterialEditorInstance = FMaterialEditorUtilities::GetIMaterialEditorForObject(
-					MaterialExpression))
+				if (const auto MaterialEditorInstance = StaticCastSharedPtr<IMaterialEditor>(
+						FToolkitManager::Get().FindEditorForAsset(OwningObject)))
 				{
 					MaterialEditorInstance->FocusWindow(OwningObject);
 					MaterialEditorInstance->JumpToExpression(MaterialExpression);

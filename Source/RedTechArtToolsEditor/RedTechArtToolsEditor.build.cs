@@ -30,12 +30,13 @@ public class RedTechArtToolsEditor : ModuleRules
 
 		PrivateDependencyModuleNames.AddRange(new string[]
 		{
+			"BlueprintEditorLibrary",
 			"Core",
 			"CoreUObject",
+			"EditorFramework",
 			"Engine",
-			"BlueprintEditorLibrary",
 			"MaterialEditor",
-			"UnrealEd",
+			"UnrealEd"
 		});
 
 		PublicIncludePaths.AddRange(new string[] { });
