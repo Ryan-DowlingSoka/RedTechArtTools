@@ -1,7 +1,7 @@
 {
 	"FileVersion": 1,
-	"Version": 3,
-	"VersionName": "1.0.3",
+	"Version": 4,
+	"VersionName": "1.0.4",
 	"FriendlyName": "Red Tech Art Tools",
 	"Description": "Open Source Tech Art Tools for use in UE5. Material Editing, Geometry Scripting, Content Management and more.",
 	"Category": "Tech Art",
