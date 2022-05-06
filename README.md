@@ -42,7 +42,7 @@ Clicking the Function name will locate that function in the content browser.
 
 #### Parameters List
 
-The right panel is the parameters list. All parameters used in the enabled functions show up here sorted by **Group Name** > **Sort Priority** > **Parameter Name**, the same sorting used in the Material Instance editor.
+The right panel is the parameters list. All parameters used in the enabled functions show up here sorted by **Group Name** > **Sort Priority** > **Parameter Name**, the same sorting used in the Material Instance editor. At the top is a filter search bar which compares against the group name and the parameter name of each item.
 
 ![Animated image showing the process of modifying parameter names and priorities, hitting apply, and seeing the updates in a material instance.](Documentation/Images/mph.parameter_panel.main.gif)
 
