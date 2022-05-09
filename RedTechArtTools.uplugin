@@ -14,7 +14,7 @@
 	"IsBetaVersion": false,
 	"IsExperimentalVersion": false,
 	"Installed": false,
-	"IsEnabledByDefault": false,
+	"EnabledByDefault": false,
 	"Modules": [
 		{
 			"Name": "RedTechArtToolsRuntime",
@@ -32,6 +32,10 @@
             "Name": "EditorScriptingUtilities",
             "Enabled": true
         },
+		{
+			"Name": "CommonUI",
+			"Enabled": true
+		},
 		{
 			"Name": "PythonScriptPlugin",
 			"Enabled": true
