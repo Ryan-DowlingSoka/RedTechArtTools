@@ -1,7 +1,7 @@
 {
 	"FileVersion": 1,
-	"Version": 4,
-	"VersionName": "1.0.4",
+	"Version": 5,
+	"VersionName": "1.0.5",
 	"FriendlyName": "Red Tech Art Tools",
 	"Description": "Open Source Tech Art Tools for use in UE5. Material Editing, Geometry Scripting, Content Management and more.",
 	"Category": "Tech Art",
@@ -14,7 +14,7 @@
 	"IsBetaVersion": false,
 	"IsExperimentalVersion": false,
 	"Installed": false,
-	"IsEnabledByDefault": false,
+	"EnabledByDefault": false,
 	"Modules": [
 		{
 			"Name": "RedTechArtToolsRuntime",
@@ -32,6 +32,10 @@
             "Name": "EditorScriptingUtilities",
             "Enabled": true
         },
+		{
+			"Name": "CommonUI",
+			"Enabled": true
+		},
 		{
 			"Name": "PythonScriptPlugin",
 			"Enabled": true
