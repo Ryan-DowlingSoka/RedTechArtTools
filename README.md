@@ -10,6 +10,9 @@ Download the zip (or clone this repository) to your project or engine plugin fol
 
 Remember, if you are using the UE5 launcher, you must put the plugin in the project folder to have it be compiled correctly.
 
+The plugin is not **EnabledByDefault** so you will need to enable it in your project settings through the plugin window.
+![Image showing RedTechArtTools v1.0.4 being activated in the plugin window under the category Tech Art](Documentation/Images/mph.activate_plugin.png)
+
 ## Current Tools
 
 ### Material Parameters Helper Widget v1.0.1
