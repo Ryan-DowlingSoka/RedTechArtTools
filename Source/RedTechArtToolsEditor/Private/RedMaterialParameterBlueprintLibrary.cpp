@@ -22,11 +22,13 @@
 
 #include "RedMaterialParameterBlueprintLibrary.h"
 
+#include "ContentBrowserModule.h"
 #include "EditorTutorial.h"
 #include "Materials/MaterialExpressionCurveAtlasRowParameter.h"
 #include "Materials/MaterialExpressionScalarParameter.h"
 #include "Materials/MaterialExpressionVectorParameter.h"
 #include "Editor.h"
+#include "IContentBrowserSingleton.h"
 #include "IMaterialEditor.h"
 #include "MaterialEditorUtilities.h"
 #include "Subsystems/AssetEditorSubsystem.h"

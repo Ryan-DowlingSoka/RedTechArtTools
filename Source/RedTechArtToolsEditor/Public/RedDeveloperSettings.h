@@ -20,37 +20,24 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using UnrealBuildTool;
+#pragma once
 
-public class RedTechArtToolsEditor : ModuleRules
+#include "CoreMinimal.h"
+#include "DeveloperSettingsClasses.h"
+#include "RedDeveloperSettings.generated.h"
+
+/**
+ * Developer settings for the RED Tech Art Tools Plugin.
+ */
+UCLASS(Config=RedTechArtTools, DefaultConfig, meta=(DisplayName="RED Tech Art Tools"))
+class REDTECHARTTOOLSEDITOR_API URedDeveloperSettings : public UDeveloperSettings
 {
-	public RedTechArtToolsEditor(ReadOnlyTargetRules Target) : base(Target)
-	{
-		PublicDependencyModuleNames.AddRange(new string[] { });
+	GENERATED_BODY()
+public:
+	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Editor Icon Widget")
+	TArray<FString> EditorIconWidgetSearchPaths;
 
-		PrivateDependencyModuleNames.AddRange(new string[]
-		{
-			"BlueprintEditorLibrary",
-			"Core",
-			"CoreUObject",
-			"DeveloperSettings",
-			"EditorFramework",
-			"Engine",
-			"InputCore",
-			"MaterialEditor",
-			"Slate",
-			"SlateCore",
-			"ToolWidgets",
-			"UnrealEd",
-			"UMG"
-		});
-
-		PublicIncludePaths.AddRange(new string[] { });
-
-		PrivateIncludePaths.AddRange(new string[] { });
-
-		PublicIncludePathModuleNames.AddRange(new string[] { });
-
-		PrivateIncludePathModuleNames.AddRange(new string[] { });
-	}
-}
+	virtual FName GetCategoryName() const override {return FName("Plugins");}
+	
+	URedDeveloperSettings();
+};

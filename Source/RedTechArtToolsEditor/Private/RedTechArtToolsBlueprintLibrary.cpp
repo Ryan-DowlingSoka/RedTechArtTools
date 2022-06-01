@@ -21,21 +21,26 @@
 // SOFTWARE.
 
 #include "RedTechArtToolsBlueprintLibrary.h"
+
+#include "IContentBrowserSingleton.h"
+#include "Dialogs/DlgPickPath.h"
 #include "Engine/DataTable.h"
 #include "GameFramework/GameStateBase.h"
 
 /** Output entire contents of a DataTable as a string */
-FString URedTechArtToolsBlueprintLibrary::GetTableAsString(const UDataTable* DataTable, const bool bUseJsonObjectsForStructs, const bool bUseSimpleText)
+FString URedTechArtToolsBlueprintLibrary::GetTableAsString(const UDataTable* DataTable,
+                                                           const bool bUseJsonObjectsForStructs,
+                                                           const bool bUseSimpleText)
 {
-	if(IsValid(DataTable))
+	if (IsValid(DataTable))
 	{
 		EDataTableExportFlags Flags = EDataTableExportFlags::None;
-		if(bUseJsonObjectsForStructs)
+		if (bUseJsonObjectsForStructs)
 			Flags = EDataTableExportFlags::UseJsonObjectsForStructs;
 
-		if(bUseSimpleText)
+		if (bUseSimpleText)
 			Flags = Flags | EDataTableExportFlags::UseSimpleText;
-		
+
 		return DataTable->GetTableAsString(Flags);
 	}
 	return "";
@@ -43,17 +48,18 @@ FString URedTechArtToolsBlueprintLibrary::GetTableAsString(const UDataTable* Dat
 
 
 /** Output entire contents of DataTable as CSV */
-FString URedTechArtToolsBlueprintLibrary::GetTableAsCSV(const UDataTable* DataTable, const bool bUseJsonObjectsForStructs, const bool bUseSimpleText)
+FString URedTechArtToolsBlueprintLibrary::GetTableAsCSV(const UDataTable* DataTable,
+                                                        const bool bUseJsonObjectsForStructs, const bool bUseSimpleText)
 {
-	if(IsValid(DataTable))
+	if (IsValid(DataTable))
 	{
 		EDataTableExportFlags Flags = EDataTableExportFlags::None;
-		if(bUseJsonObjectsForStructs)
+		if (bUseJsonObjectsForStructs)
 			Flags = EDataTableExportFlags::UseJsonObjectsForStructs;
 
-		if(bUseSimpleText)
+		if (bUseSimpleText)
 			Flags = Flags | EDataTableExportFlags::UseSimpleText;
-		
+
 		return DataTable->GetTableAsString(Flags);
 	}
 	return "";
@@ -61,23 +67,22 @@ FString URedTechArtToolsBlueprintLibrary::GetTableAsCSV(const UDataTable* DataTa
 
 
 /** Output entire contents of DataTable as JSON */
-FString URedTechArtToolsBlueprintLibrary::GetTableAsJSON(const UDataTable* DataTable, const bool bUseJsonObjectsForStructs, const bool bUseSimpleText)
+FString URedTechArtToolsBlueprintLibrary::GetTableAsJSON(const UDataTable* DataTable,
+                                                         const bool bUseJsonObjectsForStructs,
+                                                         const bool bUseSimpleText)
 {
-	if(IsValid(DataTable))
+	if (IsValid(DataTable))
 	{
 		EDataTableExportFlags Flags = EDataTableExportFlags::None;
-		if(bUseJsonObjectsForStructs)
+		if (bUseJsonObjectsForStructs)
 			Flags = EDataTableExportFlags::UseJsonObjectsForStructs;
 
-		if(bUseSimpleText)
+		if (bUseSimpleText)
 			Flags = Flags | EDataTableExportFlags::UseSimpleText;
-		
+
 		return DataTable->GetTableAsString(Flags);
 	}
 	return "";
-
-	AInfo a;
-	a.GetActorLocation();
 }
 
 bool URedTechArtToolsBlueprintLibrary::AlphaNumericLessThan(FString& A, FString& B)
@@ -98,4 +103,50 @@ bool URedTechArtToolsBlueprintLibrary::AlphaNumericGreaterThan(FString& A, FStri
 bool URedTechArtToolsBlueprintLibrary::AlphaNumericGreaterThanOrEqual(FString& A, FString& B)
 {
 	return A >= B;
+}
+
+FString URedTechArtToolsBlueprintLibrary::PickContentPath(bool& bWasPathPicked, const FString DialogTitle,
+                                                          const FString DefaultPath)
+{
+	const TSharedRef<SDlgPickPath> PickContentPathDlg = SNew(SDlgPickPath).Title(FText::FromString(DialogTitle)).
+	                                                                       DefaultPath(FText::FromString(DefaultPath));
+
+	switch (const EAppReturnType::Type ReturnType = PickContentPathDlg->ShowModal())
+	{
+	case EAppReturnType::Cancel:
+		bWasPathPicked = false;
+		return "";
+	case EAppReturnType::Ok:
+	default:
+		bWasPathPicked = true;
+		return PickContentPathDlg->GetPath().ToString();
+	}
+}
+
+void URedTechArtToolsBlueprintLibrary::ConvertPackagePathToLocalPath(const FString PackagePath, bool& bOutSuccess,
+                                                                     FString& OutLocalPath)
+{
+	bOutSuccess = FPackageName::TryConvertGameRelativePackagePathToLocalPath(PackagePath, OutLocalPath);
+}
+
+
+void URedTechArtToolsBlueprintLibrary::GetConfigArrayValue(const FString ConfigName, const FString SectionName,
+                                                           const FString KeyName,
+                                                           TArray<FString>& OutArrayValues)
+{
+	if (const FConfigFile* ConfigFile = GConfig->FindConfigFile(*GConfig->GetConfigFilename(*ConfigName)))
+	{
+		ConfigFile->GetArray(*SectionName, *KeyName, OutArrayValues);
+	}
+}
+
+void URedTechArtToolsBlueprintLibrary::SetConfigArrayValue(const FString ConfigName, const FString SectionName,
+                                                           const FString KeyName, const TArray<FString>& InArrayValues)
+{
+	if (FConfigFile* ConfigFile = GConfig->FindConfigFile(*GConfig->GetConfigFilename(*ConfigName)))
+	{
+		ConfigFile->SetArray(*SectionName, *KeyName, InArrayValues);
+		ConfigFile->Dirty = true;
+		GConfig->Flush(false);
+	}
 }

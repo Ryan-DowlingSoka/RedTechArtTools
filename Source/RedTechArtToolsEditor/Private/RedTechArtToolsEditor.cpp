@@ -21,10 +21,13 @@
 // SOFTWARE.
 
 #include "CoreMinimal.h"
+#include "RedEditorIconWidget.h"
 #include "Modules/ModuleManager.h"
-#include "Interfaces/IPluginManager.h"
 #include "IRedTechArtToolsEditor.h"
+#include "ISettingsModule.h"
+#include "Customization/RedEditorIconPathCustomization.h"
 
+#define LOCTEXT_NAMESPACE "RedTechArtTools"
 
 class FRedTechArtToolsEditor final : public IRedTechArtToolsEditor
 {
@@ -37,9 +40,29 @@ IMPLEMENT_MODULE(FRedTechArtToolsEditor, RedTechArtToolsEditor )
 
 void FRedTechArtToolsEditor::StartupModule()
 {
+	FPropertyEditorModule& PropertyModule = FModuleManager::LoadModuleChecked<FPropertyEditorModule>("PropertyEditor");
+	PropertyModule.RegisterCustomPropertyTypeLayout(
+		FRedEditorIconPath::StaticStruct()->GetFName(),
+		FOnGetPropertyTypeCustomizationInstance::CreateStatic(&FRedEditorIconPathCustomization::MakeInstance));
+	
+	PropertyModule.NotifyCustomizationModuleChanged();
 }
 
 
 void FRedTechArtToolsEditor::ShutdownModule()
 {
+	if (FModuleManager::Get().IsModuleLoaded("PropertyEditor"))
+	{
+		FPropertyEditorModule& PropertyModule = FModuleManager::GetModuleChecked<FPropertyEditorModule>("PropertyEditor");
+		PropertyModule.UnregisterCustomPropertyTypeLayout(FRedEditorIconPath::StaticStruct()->GetFName());
+
+		PropertyModule.NotifyCustomizationModuleChanged();
+	}
+
+	if (ISettingsModule* SettingsModule = FModuleManager::GetModulePtr<ISettingsModule>("Settings"))
+	{
+		SettingsModule->UnregisterSettings("Project", "Plugins", "RedTechArtTools");
+	}
 }
+
+#undef LOCTEXT_NAMESPACE

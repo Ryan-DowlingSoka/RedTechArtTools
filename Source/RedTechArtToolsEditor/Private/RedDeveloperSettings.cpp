@@ -20,37 +20,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using UnrealBuildTool;
+#include "RedDeveloperSettings.h"
 
-public class RedTechArtToolsEditor : ModuleRules
+URedDeveloperSettings::URedDeveloperSettings()
 {
-	public RedTechArtToolsEditor(ReadOnlyTargetRules Target) : base(Target)
-	{
-		PublicDependencyModuleNames.AddRange(new string[] { });
-
-		PrivateDependencyModuleNames.AddRange(new string[]
-		{
-			"BlueprintEditorLibrary",
-			"Core",
-			"CoreUObject",
-			"DeveloperSettings",
-			"EditorFramework",
-			"Engine",
-			"InputCore",
-			"MaterialEditor",
-			"Slate",
-			"SlateCore",
-			"ToolWidgets",
-			"UnrealEd",
-			"UMG"
-		});
-
-		PublicIncludePaths.AddRange(new string[] { });
-
-		PrivateIncludePaths.AddRange(new string[] { });
-
-		PublicIncludePathModuleNames.AddRange(new string[] { });
-
-		PrivateIncludePathModuleNames.AddRange(new string[] { });
-	}
 }
