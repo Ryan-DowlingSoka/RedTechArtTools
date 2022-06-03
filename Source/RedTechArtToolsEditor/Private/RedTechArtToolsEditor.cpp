@@ -36,7 +36,7 @@ class FRedTechArtToolsEditor final : public IRedTechArtToolsEditor
 	virtual void ShutdownModule() override;
 };
 
-IMPLEMENT_MODULE(FRedTechArtToolsEditor, RedTechArtToolsEditor )
+IMPLEMENT_MODULE(FRedTechArtToolsEditor, RedTechArtToolsEditor)
 
 void FRedTechArtToolsEditor::StartupModule()
 {
@@ -44,7 +44,7 @@ void FRedTechArtToolsEditor::StartupModule()
 	PropertyModule.RegisterCustomPropertyTypeLayout(
 		FRedEditorIconPath::StaticStruct()->GetFName(),
 		FOnGetPropertyTypeCustomizationInstance::CreateStatic(&FRedEditorIconPathCustomization::MakeInstance));
-	
+
 	PropertyModule.NotifyCustomizationModuleChanged();
 }
 
@@ -53,7 +53,8 @@ void FRedTechArtToolsEditor::ShutdownModule()
 {
 	if (FModuleManager::Get().IsModuleLoaded("PropertyEditor"))
 	{
-		FPropertyEditorModule& PropertyModule = FModuleManager::GetModuleChecked<FPropertyEditorModule>("PropertyEditor");
+		FPropertyEditorModule& PropertyModule = FModuleManager::GetModuleChecked<FPropertyEditorModule>(
+			"PropertyEditor");
 		PropertyModule.UnregisterCustomPropertyTypeLayout(FRedEditorIconPath::StaticStruct()->GetFName());
 
 		PropertyModule.NotifyCustomizationModuleChanged();

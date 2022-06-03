@@ -34,8 +34,8 @@ TSharedRef<IPropertyTypeCustomization> FRedEditorIconPathCustomization::MakeInst
 }
 
 void FRedEditorIconPathCustomization::CustomizeHeader(TSharedRef<IPropertyHandle> StructPropertyHandle,
-                                                   class FDetailWidgetRow& HeaderRow,
-                                                   IPropertyTypeCustomizationUtils& StructCustomizationUtils)
+                                                      class FDetailWidgetRow& HeaderRow,
+                                                      IPropertyTypeCustomizationUtils& StructCustomizationUtils)
 {
 	void* StructData = nullptr;
 	const FPropertyAccess::Result Result = StructPropertyHandle.Get().GetValueData(StructData);
@@ -150,8 +150,8 @@ TSharedRef<SWidget> FRedEditorIconPathCustomization::HandleGenerateWidget(TShare
 }
 
 void FRedEditorIconPathCustomization::CustomizeChildren(TSharedRef<IPropertyHandle> StructPropertyHandle,
-                                                     class IDetailChildrenBuilder& StructBuilder,
-                                                     IPropertyTypeCustomizationUtils& StructCustomizationUtils)
+                                                        class IDetailChildrenBuilder& StructBuilder,
+                                                        IPropertyTypeCustomizationUtils& StructCustomizationUtils)
 {
 }
 

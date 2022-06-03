@@ -35,7 +35,7 @@ struct FRedEditorIconPath
 {
 	GENERATED_BODY()
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category="Editor Icon Path")
 	FString Path;
 };
 
@@ -48,19 +48,17 @@ UCLASS(DisplayName="RED Editor Icon Widget")
 class REDTECHARTTOOLSEDITOR_API URedEditorIconWidget : public UImage
 {
 	GENERATED_BODY()
-	
+
 public:
 	UPROPERTY(EditAnywhere, Category = "Editor Icon Widget")
 	FVector2D IconSize = FVector2D(20.f, 20.f);
-	
+
 	UPROPERTY(EditAnywhere, Category = "Editor Icon Widget")
 	FRedEditorIconPath IconPath;
-	
+
 protected:
 	virtual void SynchronizeProperties() override;
 
 private:
 	TUniquePtr<FSlateBrush> IconBrush;
-
-
 };

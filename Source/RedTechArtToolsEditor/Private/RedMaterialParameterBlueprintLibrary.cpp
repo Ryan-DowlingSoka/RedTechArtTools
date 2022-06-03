@@ -22,8 +22,6 @@
 
 #include "RedMaterialParameterBlueprintLibrary.h"
 
-#include "ContentBrowserModule.h"
-#include "EditorTutorial.h"
 #include "Materials/MaterialExpressionCurveAtlasRowParameter.h"
 #include "Materials/MaterialExpressionScalarParameter.h"
 #include "Materials/MaterialExpressionVectorParameter.h"
@@ -43,7 +41,7 @@ bool URedMaterialParameterBlueprintLibrary::OpenAndFocusMaterialExpression(UMate
 			if (AssetEditorSubsystem->OpenEditorForAsset(OwningObject))
 			{
 				if (const auto MaterialEditorInstance = StaticCastSharedPtr<IMaterialEditor>(
-						FToolkitManager::Get().FindEditorForAsset(OwningObject)))
+					FToolkitManager::Get().FindEditorForAsset(OwningObject)))
 				{
 					MaterialEditorInstance->FocusWindow(OwningObject);
 					MaterialEditorInstance->JumpToExpression(MaterialExpression);

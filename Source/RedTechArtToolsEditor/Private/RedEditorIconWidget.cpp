@@ -29,21 +29,20 @@
 void URedEditorIconWidget::SynchronizeProperties()
 {
 	Super::SynchronizeProperties();
-	if(!IconPath.Path.IsEmpty() && IFileManager::Get().FileExists(*FPaths::ConvertRelativePathToFull(*IconPath.Path)))
+	if (!IconPath.Path.IsEmpty() && IFileManager::Get().FileExists(*FPaths::ConvertRelativePathToFull(*IconPath.Path)))
 	{
-		if(const FString Ext = FPaths::GetExtension(IconPath.Path); Ext == "svg")
+		if (const FString Ext = FPaths::GetExtension(IconPath.Path); Ext == "svg")
 		{
-			IconBrush.Reset(new FSlateVectorImageBrush( IconPath.Path, IconSize, Brush.TintColor, Brush.Tiling ));
+			IconBrush.Reset(new FSlateVectorImageBrush(IconPath.Path, IconSize, Brush.TintColor, Brush.Tiling));
 		}
-		else if(Ext == "png")
+		else if (Ext == "png")
 		{
-			IconBrush.Reset(new FSlateDynamicImageBrush(FName(*IconPath.Path), IconSize, Brush.TintColor.GetSpecifiedColor(), Brush.Tiling ));
+			IconBrush.Reset(new FSlateDynamicImageBrush(FName(*IconPath.Path), IconSize,
+			                                            Brush.TintColor.GetSpecifiedColor(), Brush.Tiling));
 		}
-		if(IconBrush != nullptr)
+		if (IconBrush != nullptr)
 		{
 			SetBrush(*IconBrush.Get());
 		}
 	}
 }
-
-

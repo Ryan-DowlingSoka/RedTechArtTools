@@ -24,7 +24,6 @@
 
 #include "CoreMinimal.h"
 #include "Components/MultiLineEditableTextBox.h"
-#include "UObject/Object.h"
 #include "RedMultiLineEditableTextBox.generated.h"
 
 /**
@@ -35,7 +34,6 @@ UCLASS()
 class REDTECHARTTOOLSRUNTIME_API URedMultiLineEditableTextBox : public UMultiLineEditableTextBox
 {
 	GENERATED_UCLASS_BODY()
-
 public:
 	//~ Begin UWidget Interface
 	virtual TSharedRef<SWidget> RebuildWidget() override;

@@ -29,11 +29,11 @@ public:
 
 	// BEGIN IPropertyTypeCustomization interface
 	virtual void CustomizeHeader(TSharedRef<IPropertyHandle> StructPropertyHandle,
-		class FDetailWidgetRow& HeaderRow,
-		IPropertyTypeCustomizationUtils& StructCustomizationUtils) override;
+	                             class FDetailWidgetRow& HeaderRow,
+	                             IPropertyTypeCustomizationUtils& StructCustomizationUtils) override;
 	virtual void CustomizeChildren(TSharedRef<IPropertyHandle> StructPropertyHandle,
-		class IDetailChildrenBuilder& StructBuilder,
-		IPropertyTypeCustomizationUtils& StructCustomizationUtils) override;
+	                               class IDetailChildrenBuilder& StructBuilder,
+	                               IPropertyTypeCustomizationUtils& StructCustomizationUtils) override;
 	// END IPropertyTypeCustomization interface
 
 private:
@@ -41,7 +41,7 @@ private:
 
 	TArray<TSharedPtr<FString>>* GetIconOptionsPointer();
 	TArray<TSharedPtr<FString>> CachedIconOptions;
-	
+
 	static TArray<FString> GetIconOptionsFromPath();
 	static void GetIconsFromPath(const FString& InPath, TArray<FString>& OutFoundIcons);
 

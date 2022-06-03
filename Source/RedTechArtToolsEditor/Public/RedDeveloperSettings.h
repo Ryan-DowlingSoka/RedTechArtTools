@@ -37,7 +37,7 @@ public:
 	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Editor Icon Widget")
 	TArray<FString> EditorIconWidgetSearchPaths;
 
-	virtual FName GetCategoryName() const override {return FName("Plugins");}
-	
+	virtual FName GetCategoryName() const override { return FName("Plugins"); }
+
 	URedDeveloperSettings();
 };
