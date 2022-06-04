@@ -29,6 +29,8 @@
 #include "IContentBrowserSingleton.h"
 #include "IMaterialEditor.h"
 #include "MaterialEditorUtilities.h"
+#include "Materials/MaterialExpressionCollectionParameter.h"
+#include "Materials/MaterialParameterCollection.h"
 #include "Subsystems/AssetEditorSubsystem.h"
 #include "Toolkits/ToolkitManager.h"
 
@@ -44,7 +46,10 @@ bool URedMaterialParameterBlueprintLibrary::OpenAndFocusMaterialExpression(UMate
 					FToolkitManager::Get().FindEditorForAsset(OwningObject)))
 				{
 					MaterialEditorInstance->FocusWindow(OwningObject);
-					MaterialEditorInstance->JumpToExpression(MaterialExpression);
+					if(IsValid(MaterialExpression->GraphNode) || MaterialExpression->bIsParameterExpression)
+					{
+						MaterialEditorInstance->JumpToExpression(MaterialExpression);
+					}
 				}
 			}
 		}
@@ -93,10 +98,18 @@ TArray<UMaterialExpression*> URedMaterialParameterBlueprintLibrary::GetAllMateri
 		{
 			OutExpressions.Add(Expression);
 		}
+		else if(Expression->IsA(UMaterialExpressionCollectionParameter::StaticClass()))
+		{
+			OutExpressions.Add(Expression);
+		}
 	}
 	for (auto* Expression : ConstAllExpressions)
 	{
 		if (Expression->bIsParameterExpression)
+		{
+			OutExpressions.Add(const_cast<UMaterialExpression*>(Expression));
+		}
+		else if(Expression->IsA(UMaterialExpressionCollectionParameter::StaticClass()))
 		{
 			OutExpressions.Add(const_cast<UMaterialExpression*>(Expression));
 		}
@@ -114,6 +127,10 @@ TArray<UMaterialExpression*> URedMaterialParameterBlueprintLibrary::GetAllMateri
 	for (auto* Expression : AllExpressions)
 	{
 		if (Expression->bIsParameterExpression)
+		{
+			OutExpressions.Add(Expression);
+		}
+		else if(Expression->IsA(UMaterialExpressionCollectionParameter::StaticClass()))
 		{
 			OutExpressions.Add(Expression);
 		}
