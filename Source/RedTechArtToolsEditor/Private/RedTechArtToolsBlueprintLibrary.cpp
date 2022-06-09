@@ -26,6 +26,7 @@
 #include "Dialogs/DlgPickPath.h"
 #include "Engine/DataTable.h"
 #include "GameFramework/GameStateBase.h"
+#include "UObject/PropertyAccessUtil.h"
 
 /** Output entire contents of a DataTable as a string */
 FString URedTechArtToolsBlueprintLibrary::GetTableAsString(const UDataTable* DataTable,
@@ -149,4 +150,39 @@ void URedTechArtToolsBlueprintLibrary::SetConfigArrayValue(const FString ConfigN
 		ConfigFile->Dirty = true;
 		GConfig->Flush(false);
 	}
+}
+
+TMap<FString, FString> URedTechArtToolsBlueprintLibrary::GetEditorSettableVariables(UObject* Object)
+{
+	TMap<FString, FString> Result;
+	if (IsValid(Object))
+	{
+		UClass* Class;
+		if( const UBlueprint* Blueprint = Cast<UBlueprint>(Object); IsValid(Blueprint))
+		{
+			Class = Blueprint->GetBlueprintClass();
+		}
+		else 
+		{
+			Class = Object->GetClass();
+		}
+
+		if(IsValid(Class))
+		{
+			for (TFieldIterator<FProperty> PropertyIt(Class); PropertyIt; ++PropertyIt)
+			{
+				if( const FProperty* Property = *PropertyIt; Property != nullptr)
+				{
+					if(Property->HasAnyPropertyFlags(EPropertyFlags::CPF_Edit) && !Property->HasAnyPropertyFlags(PropertyAccessUtil::EditorReadOnlyFlags))
+					{
+						FString PropertyName = Property->GetNameCPP();
+						FString ExtendedType;
+						FString PropertyType = Property->GetCPPType(&ExtendedType);
+						Result.Add(PropertyName, PropertyType + ExtendedType);
+					}
+				}
+			}
+		}	
+	}
+	return Result;
 }

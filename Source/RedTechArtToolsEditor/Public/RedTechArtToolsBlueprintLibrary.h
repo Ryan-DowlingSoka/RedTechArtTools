@@ -84,4 +84,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category=EditorScripting)
 	static void SetConfigArrayValue(const FString ConfigName, const FString SectionName, const FString KeyName,
 	                                UPARAM(ref) const TArray<FString>& InArrayValues);
+
+	UFUNCTION(BlueprintCallable, Category=EditorScripting)
+	static TMap<FString, FString> GetEditorSettableVariables(UObject* Object);
 };
