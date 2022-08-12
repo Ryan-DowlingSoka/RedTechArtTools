@@ -66,7 +66,7 @@ struct REDTECHARTTOOLSRUNTIME_API FRedBPEnum
 		SetEnumByPath(FSoftObjectPath(*InEnumObjectPath));
 	}
 
-	UPROPERTY(Transient, EditAnywhere, meta=(DisplayThumbnail="false"), Category="Example Blueprint Enum")
+	UPROPERTY(Transient, EditAnywhere, meta=(DisplayThumbnail="false"), Category="Blueprint Enum")
 	TObjectPtr<const UEnum> SourceEnum = nullptr;
 	
 	const FSoftObjectPath& GetEnumPath() const
@@ -152,16 +152,16 @@ struct REDTECHARTTOOLSRUNTIME_API FRedBPEnum
 	
 
 protected:
-	UPROPERTY(Config, EditAnywhere)
+	UPROPERTY(Config)
 	FSoftObjectPath SourceEnumPath;
 	
-	UPROPERTY(Config, EditAnywhere, meta=(AllowPrivateAccess="true"));
+	UPROPERTY(Config);
 	int64 Value = 0;
 
-	UPROPERTY(Config, EditAnywhere, meta=(AllowPrivateAccess="true"))
+	UPROPERTY(Config)
 	int32 Index = INDEX_NONE;
 
-	UPROPERTY(Config, EditAnywhere, meta=(AllowPrivateAccess="true"))
+	UPROPERTY(Config)
 	FName Name = NAME_None;
 
 	//Fixup any potential changes to the Enum.
