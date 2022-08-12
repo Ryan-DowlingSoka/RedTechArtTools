@@ -40,16 +40,16 @@ public:
 
 	//Set Blueprint Enum with a defined class in the constructor.
 	//Note the path can be used with the class specifier (class specifiers are stripped.)
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category="Example Blueprint Enum")
 	FRedBPEnum BPEnum = FRedBPEnum("UserDefinedEnum'/RedTechArtTools/Examples/E_ExampleEnumeration.E_ExampleEnumeration'");
 
 	//Mutable BP Enum, where the user in the editor can change the blueprint enum class of the property.
 	//Note that the path is used without the class specifier.
-	UPROPERTY(EditAnywhere, meta=(UserCanSetEnum), AdvancedDisplay)
+	UPROPERTY(EditAnywhere, meta=(UserCanSetEnum), AdvancedDisplay, Category="Example Blueprint Enum")
 	FRedBPEnum BPEnumMutable = FRedBPEnum("/RedTechArtTools/Examples/E_ExampleEnumeration.E_ExampleEnumeration");
 
 	//Mutable BP Enum, where the user in the editor can change the blueprint enum class of the property.
-	UPROPERTY(EditAnywhere, meta=(UserCanSetEnum), AdvancedDisplay)
+	UPROPERTY(EditAnywhere, meta=(UserCanSetEnum), AdvancedDisplay, Category="Example Blueprint Enum")
 	FRedBPEnum BPEnumEmpty;
 	
 protected:

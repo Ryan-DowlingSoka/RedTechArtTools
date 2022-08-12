@@ -66,7 +66,7 @@ struct REDTECHARTTOOLSRUNTIME_API FRedBPEnum
 		SetEnumByPath(FSoftObjectPath(*InEnumObjectPath));
 	}
 
-	UPROPERTY(Transient, EditAnywhere, meta=(DisplayThumbnail="false"))
+	UPROPERTY(Transient, EditAnywhere, meta=(DisplayThumbnail="false"), Category="Example Blueprint Enum")
 	TObjectPtr<const UEnum> SourceEnum = nullptr;
 	
 	const FSoftObjectPath& GetEnumPath() const
