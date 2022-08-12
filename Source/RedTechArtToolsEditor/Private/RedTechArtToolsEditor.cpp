@@ -21,11 +21,13 @@
 // SOFTWARE.
 
 #include "CoreMinimal.h"
-#include "RedEditorIconWidget.h"
-#include "Modules/ModuleManager.h"
 #include "IRedTechArtToolsEditor.h"
 #include "ISettingsModule.h"
+#include "RedBPEnum.h"
+#include "RedEditorIconWidget.h"
+#include "Customization/RedBPEnumCustomization.h"
 #include "Customization/RedEditorIconPathCustomization.h"
+#include "Modules/ModuleManager.h"
 
 #define LOCTEXT_NAMESPACE "RedTechArtTools"
 
@@ -44,7 +46,9 @@ void FRedTechArtToolsEditor::StartupModule()
 	PropertyModule.RegisterCustomPropertyTypeLayout(
 		FRedEditorIconPath::StaticStruct()->GetFName(),
 		FOnGetPropertyTypeCustomizationInstance::CreateStatic(&FRedEditorIconPathCustomization::MakeInstance));
-
+	PropertyModule.RegisterCustomPropertyTypeLayout(
+		FRedBPEnum::StaticStruct()->GetFName(),
+		FOnGetPropertyTypeCustomizationInstance::CreateStatic(&FRedBPEnumCustomization::MakeInstance));
 	PropertyModule.NotifyCustomizationModuleChanged();
 }
 

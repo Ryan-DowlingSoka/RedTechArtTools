@@ -22,24 +22,24 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
-#include "Components/MultiLineEditableTextBox.h"
-#include "RedMultiLineEditableTextBox.generated.h"
+class SSearchableComboBox;
 
-/**
- * Child class of MultiLineEditableTextBox which allows the application of the Shift+Enter key combo to insert a new line
- * instead of just committing the text.
- */
-UCLASS()
-class REDTECHARTTOOLSRUNTIME_API URedMultiLineEditableTextBox : public UMultiLineEditableTextBox
+class FRedBPEnumCustomization : public IPropertyTypeCustomization
 {
-	GENERATED_UCLASS_BODY()
 public:
-	//~ Begin UWidget Interface
-	virtual TSharedRef<SWidget> RebuildWidget() override;
-	// End of UWidget
+	static TSharedRef<IPropertyTypeCustomization> MakeInstance();
 
-	// Shift+Enter adds a new line instead of committing the text contents.
-	UPROPERTY(EditAnywhere, Category=Content)
-	bool bShiftEnterForNewLine;
+	// BEGIN IPropertyTypeCustomization interface
+	virtual void CustomizeHeader(TSharedRef<IPropertyHandle> StructPropertyHandle,
+	                             class FDetailWidgetRow& HeaderRow,
+	                             IPropertyTypeCustomizationUtils& StructCustomizationUtils) override;
+	virtual void CustomizeChildren(TSharedRef<IPropertyHandle> StructPropertyHandle,
+	                               class IDetailChildrenBuilder& StructBuilder,
+	                               IPropertyTypeCustomizationUtils& StructCustomizationUtils) override;
+	// END IPropertyTypeCustomization interface
+
+private:
+	TArray<TSharedPtr<FString>>* GetEnumOptions(const UEnum* Enum);
+	TArray<TSharedPtr<FString>> CachedEnumOptions;
+	TSharedPtr<SSearchableComboBox> CachedSearchableComboBox;
 };

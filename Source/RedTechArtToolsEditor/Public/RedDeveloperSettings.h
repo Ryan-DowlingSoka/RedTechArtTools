@@ -29,7 +29,7 @@
 /**
  * Developer settings for the RED Tech Art Tools Plugin.
  */
-UCLASS(Config=RedTechArtTools, DefaultConfig, meta=(DisplayName="RED Tech Art Tools"))
+UCLASS(config=RedTechArtTools, defaultconfig, meta=(DisplayName="RED Tech Art Tools"))
 class REDTECHARTTOOLSEDITOR_API URedDeveloperSettings : public UDeveloperSettings
 {
 	GENERATED_BODY()

@@ -20,26 +20,44 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#pragma once
+#include "Example_BlueprintEnum.h"
 
-#include "CoreMinimal.h"
-#include "Components/MultiLineEditableTextBox.h"
-#include "RedMultiLineEditableTextBox.generated.h"
+DEFINE_LOG_CATEGORY(LogBlueprintEnumExample);
 
-/**
- * Child class of MultiLineEditableTextBox which allows the application of the Shift+Enter key combo to insert a new line
- * instead of just committing the text.
- */
-UCLASS()
-class REDTECHARTTOOLSRUNTIME_API URedMultiLineEditableTextBox : public UMultiLineEditableTextBox
+#define LOCTEXT_NAMESPACE "BlueprintExample"
+
+// Sets default values
+AExample_BlueprintEnum::AExample_BlueprintEnum()
 {
-	GENERATED_UCLASS_BODY()
-public:
-	//~ Begin UWidget Interface
-	virtual TSharedRef<SWidget> RebuildWidget() override;
-	// End of UWidget
+	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	PrimaryActorTick.bCanEverTick = true;
+}
 
-	// Shift+Enter adds a new line instead of committing the text contents.
-	UPROPERTY(EditAnywhere, Category=Content)
-	bool bShiftEnterForNewLine;
-};
+// Called when the game starts or when spawned
+void AExample_BlueprintEnum::BeginPlay()
+{
+	Super::BeginPlay();
+}
+
+// Called every frame
+void AExample_BlueprintEnum::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	switch(BPEnum.GetIndex())
+	{
+	case 0:
+		UE_LOG(LogBlueprintEnumExample, Warning, TEXT("%s"), *BPEnum.GetName().ToString());
+		break;
+	case 1:
+		UE_LOG(LogBlueprintEnumExample, Warning, TEXT("%d"), BPEnum.GetIndex());
+		break;
+	case 2:
+		UE_LOG(LogBlueprintEnumExample, Warning, TEXT("%d"), BPEnum.GetValue());
+		break;
+	default:
+		break;
+	}
+}
+
+#undef LOCTEXT_NAMESPACE

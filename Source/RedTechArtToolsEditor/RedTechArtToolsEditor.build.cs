@@ -38,6 +38,7 @@ public class RedTechArtToolsEditor : ModuleRules
 			"Engine",
 			"InputCore",
 			"MaterialEditor",
+			"RedTechArtToolsRuntime",
 			"Slate",
 			"SlateCore",
 			"ToolWidgets",

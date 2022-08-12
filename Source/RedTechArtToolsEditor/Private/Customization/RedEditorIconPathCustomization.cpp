@@ -62,7 +62,6 @@ void FRedEditorIconPathCustomization::CustomizeHeader(TSharedRef<IPropertyHandle
 					                         	const FScopedTransaction Transaction(LOCTEXT("SetEditorIcon", "Set Editor Icon Path"));
 						                         StructPropertyHandle.Get().NotifyPreChange();
 						                         CurrentValue->Path = *NewChoice;
-						                         const FString ChoiceItemName = FPaths::GetCleanFilename(*NewChoice);
 						                         StructPropertyHandle.Get().NotifyPostChange(
 							                         EPropertyChangeType::ValueSet);
 					                         }
