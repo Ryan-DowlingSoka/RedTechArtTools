@@ -25,6 +25,8 @@
 #include "CoreMinimal.h"
 #include "RedBPEnum.generated.h"
 
+#define LOCTEXT_NAMESPACE "RedBPEnum"
+
 /**
  * Wrapper class for an blueprint defined enum with a details customization to let C++ create properties with it.
  * Use meta=(UserCanSetEnum) to allow the user to define which BP based Enum object is used in editor.
@@ -118,7 +120,7 @@ struct REDTECHARTTOOLSRUNTIME_API FRedBPEnum
 #endif
 		return Value;
 	}
-
+	
 	FName GetName() const
 	{
 #if !UE_BUILD_SHIPPING
@@ -164,14 +166,14 @@ protected:
 	UPROPERTY(Config)
 	FName Name = NAME_None;
 
-	//Fixup any potential changes to the Enum.
+	//Fixup any potential changes to the Enum
 	void UpdateEnum()
 	{
 		if(const UEnum* Enum = GetEnum(); IsValid(Enum))
 		{
 			if(Name != NAME_None)
 			{
-				//Search by Name first.
+				// Search by Name first.
 				const int32 NewIndex = Enum->GetIndexByName(Name);
 				if(NewIndex != INDEX_NONE)
 				{
@@ -181,7 +183,8 @@ protected:
 					return;
 				}
 			}
-				
+
+			// Then search by Index
 			if (Index != INDEX_NONE)
 			{
 				const FName NewName = Enum->GetNameByIndex(Index);
@@ -194,6 +197,7 @@ protected:
 				}	
 			}
 
+			// Finally search by Value
 			const int32 NewValueIndex = Enum->GetIndexByValue(Value);
 			if(NewValueIndex != INDEX_NONE)
 			{
@@ -210,11 +214,72 @@ class REDTECHARTTOOLSRUNTIME_API URedBPEnumBlueprintLibrary : public UBlueprintF
 {
 	GENERATED_BODY()
 
+public:
 	// Returns the currently set enum Element Index of the given RedBPEnum.
 	UFUNCTION(BlueprintCallable, Category="RedBPEnum")
 	static int32 GetIndex(UPARAM(ref) const FRedBPEnum& RedBPEnum)
 	{
 		return RedBPEnum.GetIndex();
+	}
+
+	// Convert the Value of the the BPEnum to a byte, for future conversion or comparison with any enum.
+	UFUNCTION(BlueprintPure, Category="RedBPEnum", meta=(DisplayName="To Byte", CompactNodeTitle="->", keywords="cast, convert", BlueprintAutocast))
+	static uint8 Conv_ToByte(UPARAM(ref) const FRedBPEnum& BPEnum)
+	{
+		return GetValidValueImpl(BPEnum.GetEnum(), BPEnum);
+	}
+
+	// Convert the Value of the BPEnum to a specific UEnum. BP Internal Use Only, for consumption from K2Node_CastRedBPEnumValueToEnum
+	UFUNCTION(BlueprintPure, CustomThunk, meta=(BlueprintInternalUseOnly = "TRUE"))
+	static uint8 GetValidValue(const UEnum* Enum, UPARAM(ref) const FRedBPEnum& EnumeratorValue);
+
+	// Internal Implementation of GetValidValue.
+	static uint8 GetValidValueImpl(const UEnum* Enum, const FRedBPEnum& EnumeratorValue)
+	{
+		if (Enum != nullptr && Enum == EnumeratorValue.GetEnum())
+		{
+			if (Enum->IsValidEnumValue(EnumeratorValue.GetValue()))
+			{
+				return EnumeratorValue.GetValue();
+			}
+			return Enum->GetMaxEnumValue();
+		}
+
+#if !UE_BUILD_SHIPPING
+		ensureMsgf(Enum == EnumeratorValue.GetEnum(),
+			TEXT("RedBPEnum's Enum class ({0}) does not match the target enum class ({1})."),
+			*GetNameSafe(EnumeratorValue.GetEnum()),
+			*GetNameSafe(Enum)
+			);
+#endif
+		return INDEX_NONE;
+	}
+
+	// Custom Thunk for GetValidValue. This allows us to throw a BlueprintScriptError in the stack so we can
+	// track down the nodes that are mis-aligned. Other than the ThrowScriptException this is taken identically from
+	// the generated .cpp
+	DECLARE_FUNCTION(execGetValidValue)
+	{
+		P_GET_OBJECT(UEnum,Z_Param_Enum);
+		P_GET_STRUCT_REF(FRedBPEnum,Z_Param_Out_EnumeratorValue);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		*(uint8*)Z_Param__Result=GetValidValueImpl(Z_Param_Enum,Z_Param_Out_EnumeratorValue);
+#if !UE_BUILD_SHIPPING
+		if(Z_Param_Enum != Z_Param_Out_EnumeratorValue.GetEnum())
+		{
+			const FBlueprintExceptionInfo ExceptionInfo(
+				EBlueprintExceptionType::AccessViolation,
+				FText::Format(
+					LOCTEXT("EnumsDoNotMatch", "RedBPEnum's Enum class ({0}) does not match the target enum class ({1})."),
+					FText::FromString(GetNameSafe(Z_Param_Out_EnumeratorValue.GetEnum())),
+					FText::FromString(GetNameSafe(Z_Param_Enum))
+				)
+			);
+			FBlueprintCoreDelegates::ThrowScriptException(P_THIS, Stack, ExceptionInfo);
+		}
+#endif
+		P_NATIVE_END;
 	}
 
 	// Returns the currently set enum Element Value of the given RedBPEnum.
@@ -253,3 +318,5 @@ class REDTECHARTTOOLSRUNTIME_API URedBPEnumBlueprintLibrary : public UBlueprintF
 		RedBPEnum.SetName(NewName);
 	}
 };
+
+#undef LOCTEXT_NAMESPACE

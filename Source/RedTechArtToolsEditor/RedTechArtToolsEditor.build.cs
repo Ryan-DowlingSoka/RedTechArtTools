@@ -31,12 +31,15 @@ public class RedTechArtToolsEditor : ModuleRules
 		PrivateDependencyModuleNames.AddRange(new string[]
 		{
 			"BlueprintEditorLibrary",
+			"BlueprintGraph",
 			"Core",
 			"CoreUObject",
 			"DeveloperSettings",
 			"EditorFramework",
 			"Engine",
 			"InputCore",
+			"Kismet",
+			"KismetCompiler",
 			"MaterialEditor",
 			"RedTechArtToolsRuntime",
 			"Slate",
