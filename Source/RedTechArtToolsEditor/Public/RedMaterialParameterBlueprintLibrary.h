@@ -25,6 +25,7 @@
 #include "CoreMinimal.h"
 #include "BlueprintEditorLibrary.h"
 #include "MaterialTypes.h"
+#include "Materials/MaterialExpression.h"
 #include "RedMaterialParameterBlueprintLibrary.generated.h"
 
 class UCurveLinearColor;

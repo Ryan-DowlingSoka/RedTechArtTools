@@ -22,14 +22,17 @@
 
 #include "RedMaterialParameterBlueprintLibrary.h"
 
+#include "Materials/Material.h"
 #include "Materials/MaterialExpressionCurveAtlasRowParameter.h"
 #include "Materials/MaterialExpressionScalarParameter.h"
 #include "Materials/MaterialExpressionVectorParameter.h"
+#include "Materials/MaterialFunction.h"
 #include "Editor.h"
 #include "IContentBrowserSingleton.h"
 #include "IMaterialEditor.h"
 #include "MaterialEditorUtilities.h"
 #include "Materials/MaterialExpressionCollectionParameter.h"
+#include "Materials/MaterialExpressionTextureSampleParameter.h"
 #include "Materials/MaterialParameterCollection.h"
 #include "Subsystems/AssetEditorSubsystem.h"
 #include "Toolkits/ToolkitManager.h"

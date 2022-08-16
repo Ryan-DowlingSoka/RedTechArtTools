@@ -21,6 +21,8 @@
 // SOFTWARE.
 
 #include "CoreMinimal.h"
+#include "RedEditorIconWidget.h"
+#include "Modules/ModuleManager.h"
 #include "IRedTechArtToolsEditor.h"
 #include "ISettingsModule.h"
 #include "RedBPEnum.h"
