@@ -21,6 +21,7 @@
 // SOFTWARE.
 
 #pragma once
+#include "IPropertyTypeCustomization.h"
 
 class FRedEditorIconPathCustomization : public IPropertyTypeCustomization
 {

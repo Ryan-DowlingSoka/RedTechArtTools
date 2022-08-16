@@ -24,6 +24,7 @@
 
 #include "CoreMinimal.h"
 #include "DeveloperSettingsClasses.h"
+#include "Engine/DeveloperSettings.h"
 #include "RedDeveloperSettings.generated.h"
 
 /**

@@ -26,7 +26,7 @@ public class RedTechArtToolsEditor : ModuleRules
 {
 	public RedTechArtToolsEditor(ReadOnlyTargetRules Target) : base(Target)
 	{
-		PublicDependencyModuleNames.AddRange(new string[] { });
+		PublicDependencyModuleNames.AddRange(new string[] { "Engine", "PropertyEditor" });
 
 		PrivateDependencyModuleNames.AddRange(new string[]
 		{
