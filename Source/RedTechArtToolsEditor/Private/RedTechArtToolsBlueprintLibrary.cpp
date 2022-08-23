@@ -23,10 +23,13 @@
 #include "RedTechArtToolsBlueprintLibrary.h"
 
 #include "IContentBrowserSingleton.h"
+#include "Blueprint/UserWidget.h"
 #include "Dialogs/DlgPickPath.h"
 #include "Engine/DataTable.h"
 #include "GameFramework/GameStateBase.h"
 #include "UObject/PropertyAccessUtil.h"
+
+#define LOCTEXT_NAMESPACE "RedTechArtToolsBlueprintLibrary"
 
 /** Output entire contents of a DataTable as a string */
 FString URedTechArtToolsBlueprintLibrary::GetTableAsString(const UDataTable* DataTable,
@@ -186,3 +189,137 @@ TMap<FString, FString> URedTechArtToolsBlueprintLibrary::GetEditorSettableVariab
 	}
 	return Result;
 }
+
+/** Dialog widget used to display an object its properties */
+class SRedWidgetParamDialog : public SCompoundWidget
+{
+public:
+	SLATE_BEGIN_ARGS(SRedWidgetParamDialog) {}
+	SLATE_END_ARGS()	
+
+	void Construct(const FArguments& InArgs, TWeakPtr<SWindow> InParentWindow, const TSharedRef<SWidget> InnerWidget, const FShowWidgetDialogOptions& Options)
+	{
+		bOKPressed = false;
+
+		FPropertyEditorModule& PropertyEditorModule = FModuleManager::Get().LoadModuleChecked<FPropertyEditorModule>("PropertyEditor");
+
+		TSharedPtr<SWidget> Buttons;
+			
+		if(Options.bUseDefaultButtons)
+		{
+			SAssignNew(Buttons, SBorder)
+				.BorderImage(FAppStyle::GetBrush("ToolPanel.GroupBorder"))
+				.VAlign(VAlign_Center)
+				.HAlign(HAlign_Right)
+				[
+					SNew(SHorizontalBox)
+					+SHorizontalBox::Slot()
+					.Padding(2.0f)
+					.AutoWidth()
+					[
+						SNew(SButton)
+						.ContentPadding(FCoreStyle::Get().GetMargin("StandardDialog.ContentPadding"))
+						.Text(Options.OkayButtonText)
+						.HAlign(HAlign_Center)
+						.OnClicked_Lambda([this, InParentWindow, InArgs]()
+						{
+							if(InParentWindow.IsValid())
+							{
+								InParentWindow.Pin()->RequestDestroyWindow();
+							}
+							bOKPressed = true;
+							return FReply::Handled(); 
+						})
+					]
+					+SHorizontalBox::Slot()
+					.Padding(2.0f)
+					.AutoWidth()
+					[
+						SNew(SButton)
+						.ContentPadding(FCoreStyle::Get().GetMargin("StandardDialog.ContentPadding"))
+						.Text(Options.CancelButtonText)
+						.HAlign(HAlign_Center)
+						.OnClicked_Lambda([InParentWindow]()
+						{ 
+							if(InParentWindow.IsValid())
+							{
+								InParentWindow.Pin()->RequestDestroyWindow();
+							}
+							return FReply::Handled(); 
+						})
+					]
+				];
+		}
+		else
+		{
+			SAssignNew(Buttons, SBorder)
+				.Visibility(EVisibility::Collapsed);
+		}
+		
+		ChildSlot
+		[
+			SNew(SVerticalBox)
+			+SVerticalBox::Slot()
+			.FillHeight(1.0f)
+			[
+				InnerWidget
+			]
+			+SVerticalBox::Slot()
+			.AutoHeight()
+			[
+				Buttons.ToSharedRef()
+			]
+		];
+	}
+
+	bool WasOkPressed() const { return bOKPressed; }
+protected:
+	bool bOKPressed = false;
+};
+
+bool URedTechArtToolsBlueprintLibrary::ShowWidgetDialog(const FText& Title, UUserWidget* InOutWidget, const FShowWidgetDialogOptions& Options)
+{
+	if (!FApp::IsUnattended() && !GIsRunningUnattendedScript)
+	{
+		if (IsValid(InOutWidget))
+		{
+			TSharedRef<SWindow> Window = SNew(SWindow)
+				.Title(Title)
+				.SizingRule(Options.bAutoSized ? ESizingRule::Autosized : ESizingRule::UserSized)
+				.AutoCenter(EAutoCenter::PrimaryWorkArea)
+				.SupportsMinimize(false)
+				.SupportsMaximize(false)
+				.HasCloseButton(Options.bHasCloseButton)
+				.MinWidth(Options.MinimumSize.X)
+				.MinHeight(Options.MinimumSize.Y);
+			
+			InOutWidget->Initialize();
+			TSharedRef<SWidget> TakenWidget = InOutWidget->TakeWidget();
+			TSharedPtr<SRedWidgetParamDialog> Dialog;
+			Window->SetContent(SAssignNew(Dialog, SRedWidgetParamDialog, Window, TakenWidget, Options));
+			GEditor->EditorAddModalWindow(Window);
+			return Dialog->WasOkPressed();
+		}
+	}
+
+	return false;
+}
+
+bool URedTechArtToolsBlueprintLibrary::CloseWidgetParentWindow(UWidget* Widget)
+{
+	if(ensure(IsValid(Widget)))
+	{
+		if(const TSharedPtr<SWidget> CachedWidget = Widget->GetCachedWidget())
+		{
+			const TSharedPtr<SWindow> Window = FSlateApplication::Get().FindWidgetWindow(CachedWidget.ToSharedRef());
+			if(Window.IsValid())
+			{
+				Window.Get()->RequestDestroyWindow();
+			}
+			return true;
+		}
+	}	
+	return false;
+}
+
+#undef LOCTEXT_NAMESPACE

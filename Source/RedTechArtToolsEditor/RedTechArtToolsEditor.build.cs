@@ -32,21 +32,26 @@ public class RedTechArtToolsEditor : ModuleRules
 		{
 			"BlueprintEditorLibrary",
 			"BlueprintGraph",
+			"Blutility",
 			"Core",
 			"CoreUObject",
 			"DeveloperSettings",
 			"EditorFramework",
+			"EditorScriptingUtilities",
 			"Engine",
 			"InputCore",
 			"Kismet",
 			"KismetCompiler",
+			"MainFrame",
 			"MaterialEditor",
 			"RedTechArtToolsRuntime",
 			"Slate",
 			"SlateCore",
 			"ToolWidgets",
+			"ToolMenus",
 			"UnrealEd",
-			"UMG"
+			"UMG",
+			"UMGEditor"
 		});
 
 		PublicIncludePaths.AddRange(new string[] { });
