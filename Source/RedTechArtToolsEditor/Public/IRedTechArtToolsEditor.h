@@ -32,9 +32,7 @@
  */
 class IRedTechArtToolsEditor : public IModuleInterface
 {
-
 public:
-
 	/**
 	 * Singleton-like access to this module's interface.  This is just for convenience!
 	 * Beware of calling this during the shutdown phase, though.  Your module might have been unloaded already.
@@ -43,7 +41,7 @@ public:
 	 */
 	static inline IRedTechArtToolsEditor& Get()
 	{
-		return FModuleManager::LoadModuleChecked< IRedTechArtToolsEditor >( "RedTechArtToolsEditor" );
+		return FModuleManager::LoadModuleChecked<IRedTechArtToolsEditor>("RedTechArtToolsEditor");
 	}
 
 	/**
@@ -53,7 +51,6 @@ public:
 	 */
 	static inline bool IsAvailable()
 	{
-		return FModuleManager::Get().IsModuleLoaded( "RedTechArtToolsEditor" );
+		return FModuleManager::Get().IsModuleLoaded("RedTechArtToolsEditor");
 	}
 };
-

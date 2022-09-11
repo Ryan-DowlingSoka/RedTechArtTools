@@ -15,7 +15,9 @@ The plugin is not **EnabledByDefault** so you will need to enable it in your pro
 
 ## Current Tools
 
-### Material Parameters Helper Widget v1.0.1
+### Material Parameters Helper Widget v1.0.5
+
+[![Youtube video showing an overview of the Material Parameters Widget tool.](Documentation/Images/mph.youtube_thumb.png)](https://youtu.be/v9YrwUJnBbg)
 
 Production tested materials often have many parameters, and for good reason these parameters are often scattered through modular Material Functions. Naming, Sorting, adding descriptions, and editing defaults for these parameters can be a big pain when working with lots of parameters in various functions and material graphs.
 
@@ -65,10 +67,21 @@ Default values, channel mask names, and anything that could be edited in the mat
 
 Clicking the **Material Function** name below the Description field will open the function or material and focus the node directly.
 
-![Aniamted image showing expanding and editing the texture parameter of a material. Shows how clicking on the function name below the description opens the material graph and highlights the correct node, and how the changes are propogated automatically when the Save and Apply button is pressed.](Documentation/Images/mph.expand_properties.gif)
+![Animated image showing expanding and editing the texture parameter of a material. Shows how clicking on the function name below the description opens the material graph and highlights the correct node, and how the changes are propogated automatically when the Save and Apply button is pressed.](Documentation/Images/mph.expand_properties.gif)
 
 To save changes and update any open material instance editors click the Save and Apply Button.
 
+### Editor Icon Widget
+
+When making Editor Utility Widgets and tools, it is a pain to create your own icons for simple stuff the engine already has. This tool solves that. It is simily a widget that shows a list of all available slate brushes from select folders and provides them for use exactly as UImage.
+
+![Animated image showing an overview of the features of the Editor Icon Widget.](Documentation/Images/eiw.overview.gif)
+
+The lists of folders is configurable, so if you like working with SVGs you can also add your own folders to the list, and they will be populated. Paths are relative to the /Engine folder. Project paths are untested but probably are accessible by using ../ at the start to get out of the Engine folder.
+
+![Image showing Project Settings > RED Tech Art Tools > Editor Icon Widget Search Paths](Documentation/Images/eiw.configurations_list.png)
+
+The widget is editor only, use in a runtime widget will fail to cook.
 
 ### Batch Rename Widget
 

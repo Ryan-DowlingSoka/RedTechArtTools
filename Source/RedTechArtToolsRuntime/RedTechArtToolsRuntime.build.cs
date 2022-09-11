@@ -26,24 +26,24 @@ public class RedTechArtToolsRuntime : ModuleRules
 {
 	public RedTechArtToolsRuntime(ReadOnlyTargetRules Target) : base(Target)
 	{
-                PublicDependencyModuleNames.AddRange(new string[]
-                { 
-                    "Core", 
-                    "CoreUObject", 
-                    "Engine",
-                    "UMG",
-                    "SlateCore",
-                    "Slate"
-                });
+			PublicDependencyModuleNames.AddRange(new string[]
+			{ 
+				"Core", 
+				"CoreUObject", 
+				"Engine",
+				"SlateCore",
+				"Slate",
+				"UMG"
+			});
 
-                PrivateDependencyModuleNames.AddRange(new string[]{ });
+			PrivateDependencyModuleNames.AddRange(new string[]{ });
 
-                PublicIncludePaths.AddRange(new string[]{ });
+			PublicIncludePaths.AddRange(new string[]{ });
 
-                PrivateIncludePaths.AddRange(new string[]{ });
+			PrivateIncludePaths.AddRange(new string[]{ });
 
-                PublicIncludePathModuleNames.AddRange(new string[]{ });
+			PublicIncludePathModuleNames.AddRange(new string[]{ });
 
-                PrivateIncludePathModuleNames.AddRange(new string[]{ });
+			PrivateIncludePathModuleNames.AddRange(new string[]{ });
 	}
 }

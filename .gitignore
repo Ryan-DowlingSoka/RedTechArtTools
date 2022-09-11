@@ -74,3 +74,5 @@ Plugins/*/Intermediate/*
 DerivedDataCache/*
 
 v*-RedTechArtTools-win64.zip
+
+*.pyc

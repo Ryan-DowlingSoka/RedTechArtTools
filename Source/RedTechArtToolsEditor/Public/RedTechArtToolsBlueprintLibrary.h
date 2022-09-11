@@ -37,21 +37,23 @@ class REDTECHARTTOOLSEDITOR_API URedTechArtToolsBlueprintLibrary : public UBluep
 public:
 	/** Output entire contents of a DataTable as a string */
 	UFUNCTION(BlueprintCallable, Category=DataTable)
-	static FString GetTableAsString(const UDataTable* DataTable, bool bUseJsonObjectsForStructs = false, bool bUseSimpleText = false);
-	
+	static FString GetTableAsString(const UDataTable* DataTable, bool bUseJsonObjectsForStructs = false,
+	                                bool bUseSimpleText = false);
+
 	/** Output entire contents of DataTable as CSV */
 	UFUNCTION(BlueprintCallable, Category=DataTable)
-	static FString GetTableAsCSV(const UDataTable* DataTable, bool bUseJsonObjectsForStructs = false, bool bUseSimpleText = false);
+	static FString GetTableAsCSV(const UDataTable* DataTable, bool bUseJsonObjectsForStructs = false,
+	                             bool bUseSimpleText = false);
 
-	
 	/** Output entire contents of DataTable as JSON */
 	UFUNCTION(BlueprintCallable, Category=DataTable)
-	static FString GetTableAsJSON(const UDataTable* DataTable, bool bUseJsonObjectsForStructs = false, bool bUseSimpleText = false);
+	static FString GetTableAsJSON(const UDataTable* DataTable, bool bUseJsonObjectsForStructs = false,
+	                              bool bUseSimpleText = false);
 
 	/** Is A less than or equal to B alphanumerically. */
 	UFUNCTION(BlueprintCallable, Category=String)
 	static bool AlphaNumericLessThan(UPARAM(ref) FString& A, UPARAM(ref) FString& B);
-	
+
 	/** Is A less than or equal to B alphanumerically. */
 	UFUNCTION(BlueprintCallable, Category=String)
 	static bool AlphaNumericLessThanOrEqual(UPARAM(ref) FString& A, UPARAM(ref) FString& B);
@@ -63,4 +65,26 @@ public:
 	/** Is A less than or equal to B alphanumerically. */
 	UFUNCTION(BlueprintCallable, Category=String)
 	static bool AlphaNumericGreaterThanOrEqual(UPARAM(ref) FString& A, UPARAM(ref) FString& B);
+
+	/** Opens a modal content picker for a content directory. */
+	UFUNCTION(BlueprintCallable, Category=EditorScripting)
+	static FString PickContentPath(bool& bWasPathPicked, const FString DialogTitle = "Pick Path",
+	                               const FString DefaultPath = "/Game");
+
+	/** Converts a game relative (or long) package path to a local filesystem path. */
+	UFUNCTION(BlueprintCallable, Category=EditorScripting)
+	static void ConvertPackagePathToLocalPath(const FString PackagePath, bool& bOutSuccess, FString& OutLocalPath);
+
+	/** Get array values from loaded config Array Values */
+	UFUNCTION(BlueprintCallable, Category=EditorScripting)
+	static void GetConfigArrayValue(const FString ConfigName, const FString SectionName, const FString KeyName,
+	                                TArray<FString>& OutArrayValues);
+
+	/** Set array values from loaded config Array Values. Flushes config file after setting values. */
+	UFUNCTION(BlueprintCallable, Category=EditorScripting)
+	static void SetConfigArrayValue(const FString ConfigName, const FString SectionName, const FString KeyName,
+	                                UPARAM(ref) const TArray<FString>& InArrayValues);
+
+	UFUNCTION(BlueprintCallable, Category=EditorScripting)
+	static TMap<FString, FString> GetEditorSettableVariables(UObject* Object);
 };

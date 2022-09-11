@@ -26,17 +26,27 @@ public class RedTechArtToolsEditor : ModuleRules
 {
 	public RedTechArtToolsEditor(ReadOnlyTargetRules Target) : base(Target)
 	{
-		PublicDependencyModuleNames.AddRange(new string[] { });
+		PublicDependencyModuleNames.AddRange(new string[] { "Engine", "PropertyEditor" });
 
 		PrivateDependencyModuleNames.AddRange(new string[]
 		{
 			"BlueprintEditorLibrary",
+			"BlueprintGraph",
 			"Core",
 			"CoreUObject",
+			"DeveloperSettings",
 			"EditorFramework",
 			"Engine",
+			"InputCore",
+			"Kismet",
+			"KismetCompiler",
 			"MaterialEditor",
-			"UnrealEd"
+			"RedTechArtToolsRuntime",
+			"Slate",
+			"SlateCore",
+			"ToolWidgets",
+			"UnrealEd",
+			"UMG"
 		});
 
 		PublicIncludePaths.AddRange(new string[] { });

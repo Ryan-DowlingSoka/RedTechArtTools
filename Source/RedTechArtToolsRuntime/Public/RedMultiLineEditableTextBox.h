@@ -24,18 +24,16 @@
 
 #include "CoreMinimal.h"
 #include "Components/MultiLineEditableTextBox.h"
-#include "UObject/Object.h"
 #include "RedMultiLineEditableTextBox.generated.h"
 
 /**
- * Child class of MultiLineEditableTextBox which allows the application of the Shift+Enter keycombo to insert a new line
+ * Child class of MultiLineEditableTextBox which allows the application of the Shift+Enter key combo to insert a new line
  * instead of just committing the text.
  */
 UCLASS()
 class REDTECHARTTOOLSRUNTIME_API URedMultiLineEditableTextBox : public UMultiLineEditableTextBox
 {
 	GENERATED_UCLASS_BODY()
-
 public:
 	//~ Begin UWidget Interface
 	virtual TSharedRef<SWidget> RebuildWidget() override;
