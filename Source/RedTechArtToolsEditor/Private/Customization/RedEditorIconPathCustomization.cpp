@@ -25,7 +25,11 @@
 #include "RedEditorIconWidget.h"
 #include "RedDeveloperSettings.h"
 #include "SSearchableComboBox.h"
+#include "Algo/Transform.h"
 #include "Brushes/SlateImageBrush.h"
+#include "HAL/FileManager.h"
+#include "Widgets/SToolTip.h"
+#include "Widgets/Images/SImage.h"
 
 #define LOCTEXT_NAMESPACE "RedEditorIconCustomization"
 

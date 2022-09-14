@@ -17,7 +17,7 @@ The plugin is not **EnabledByDefault** so you will need to enable it in your pro
 
 ### Material Parameters Helper Widget v1.0.5
 
-[![Youtube video showing an overview of the Material Parameters Widget tool.](Documentation/Images/mph.youtube_thumb.png)](https://youtu.be/M9s-ld-ldrs)
+[![Youtube video showing an overview of the Material Parameters Widget tool.](Documentation/Images/mph.youtube_thumb.png)](https://youtu.be/v9YrwUJnBbg)
 
 Production tested materials often have many parameters, and for good reason these parameters are often scattered through modular Material Functions. Naming, Sorting, adding descriptions, and editing defaults for these parameters can be a big pain when working with lots of parameters in various functions and material graphs.
 

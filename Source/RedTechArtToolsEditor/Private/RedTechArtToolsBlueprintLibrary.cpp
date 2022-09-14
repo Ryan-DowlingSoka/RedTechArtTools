@@ -25,8 +25,10 @@
 #include "IContentBrowserSingleton.h"
 #include "Blueprint/UserWidget.h"
 #include "Dialogs/DlgPickPath.h"
+#include "Engine/Blueprint.h"
 #include "Engine/DataTable.h"
 #include "GameFramework/GameStateBase.h"
+#include "Misc/ConfigCacheIni.h"
 #include "UObject/PropertyAccessUtil.h"
 
 #define LOCTEXT_NAMESPACE "RedTechArtToolsBlueprintLibrary"
