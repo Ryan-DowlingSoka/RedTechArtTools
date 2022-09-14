@@ -297,6 +297,7 @@ bool URedTechArtToolsBlueprintLibrary::ShowWidgetDialog(const FText& Title, UUse
 			TSharedRef<SWidget> TakenWidget = InOutWidget->TakeWidget();
 			TSharedPtr<SRedWidgetParamDialog> Dialog;
 			Window->SetContent(SAssignNew(Dialog, SRedWidgetParamDialog, Window, TakenWidget, Options));
+			Window->ShowWindow();
 			GEditor->EditorAddModalWindow(Window);
 			return Dialog->WasOkPressed();
 		}
@@ -320,6 +321,32 @@ bool URedTechArtToolsBlueprintLibrary::CloseWidgetParentWindow(UWidget* Widget)
 		}
 	}	
 	return false;
+}
+
+UObject* URedTechArtToolsBlueprintLibrary::GetDefaultObjectFromBlueprint(const UObject* Blueprint)
+{
+	if(!IsValid(Blueprint)) return nullptr;
+	
+	const UBlueprint* BlueprintObj = Cast<UBlueprint>(Blueprint);
+	if(IsValid(BlueprintObj))
+	{
+		if(IsValid(BlueprintObj->GeneratedClass))
+		{
+			return BlueprintObj->GeneratedClass->GetDefaultObject();
+		}
+		
+		FName ClassName;
+		FName SkeletonClassName;
+		BlueprintObj->GetBlueprintCDONames(ClassName, SkeletonClassName);
+		return FindObject<UObject>(nullptr, *ClassName.ToString());
+	}
+	
+	if(IsValid(Blueprint->GetClass()))
+	{
+		return Blueprint->GetClass()->GetDefaultObject();
+	}
+	
+	return nullptr;
 }
 
 #undef LOCTEXT_NAMESPACE

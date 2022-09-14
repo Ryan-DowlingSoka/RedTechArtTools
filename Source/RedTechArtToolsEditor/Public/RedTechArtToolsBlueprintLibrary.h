@@ -142,6 +142,9 @@ public:
 	/** Close the parent window for a given widget. */
 	UFUNCTION(BlueprintCallable, Category=EditorScripting, meta=(DefaultToSelf="Widget"))
 	static bool CloseWidgetParentWindow(UWidget* Widget);
+
+	UFUNCTION(BlueprintCallable, Category = EditorScripting)
+	static UObject* GetDefaultObjectFromBlueprint(const UObject* Blueprint);
 };
 
 #undef LOCTEXT_NAMESPACE
