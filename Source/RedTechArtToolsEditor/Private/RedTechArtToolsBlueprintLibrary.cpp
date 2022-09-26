@@ -210,7 +210,11 @@ public:
 		if(Options.bUseDefaultButtons)
 		{
 			SAssignNew(Buttons, SBorder)
+#if ENGINE_MAJOR_VERSION >= 5 && ENGINE_MINOR_VERSION > 1
 				.BorderImage(FAppStyle::GetBrush("ToolPanel.GroupBorder"))
+#else
+				.BorderImage(FEditorStyle::GetBrush("ToolPanel.GroupBorder"))
+#endif
 				.VAlign(VAlign_Center)
 				.HAlign(HAlign_Right)
 				[

@@ -29,6 +29,7 @@
 #include "RedBPEnum.h"
 #include "RedDeveloperSettings.h"
 #include "RedEditorIconWidget.h"
+#include "ToolMenus.h"
 #include "Blutility/Classes/EditorUtilityToolMenu.h"
 #include "Blutility/Classes/EditorUtilityWidget.h"
 #include "Blutility/Public/EditorUtilitySubsystem.h"
