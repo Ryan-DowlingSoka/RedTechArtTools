@@ -20,46 +20,24 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using UnrealBuildTool;
+#pragma once
 
-public class RedTechArtToolsEditor : ModuleRules
+#include "CoreMinimal.h"
+#include "Materials/MaterialExpression.h"
+
+#include "RedMaterialExpression_IsEditorStaticBool.generated.h"
+
+UCLASS()
+class URedMaterialExpression_IsEditorStaticBool : public UMaterialExpression
 {
-	public RedTechArtToolsEditor(ReadOnlyTargetRules Target) : base(Target)
-	{
-		PublicDependencyModuleNames.AddRange(new string[] { "Engine", "PropertyEditor" });
-
-		PrivateDependencyModuleNames.AddRange(new string[]
-		{
-			"BlueprintEditorLibrary",
-			"BlueprintGraph",
-			"Blutility",
-			"Core",
-			"CoreUObject",
-			"DeveloperSettings",
-			"EditorFramework",
-			"EditorScriptingUtilities",
-			"Engine",
-			"InputCore",
-			"Kismet",
-			"KismetCompiler",
-			"MainFrame",
-			"MaterialEditor",
-			"RedTechArtToolsRuntime",
-			"Slate",
-			"SlateCore",
-			"ToolWidgets",
-			"ToolMenus",
-			"UnrealEd",
-			"UMG",
-			"UMGEditor"
-		});
-
-		PublicIncludePaths.AddRange(new string[] { });
-
-		PrivateIncludePaths.AddRange(new string[] { });
-
-		PublicIncludePathModuleNames.AddRange(new string[] { });
-
-		PrivateIncludePathModuleNames.AddRange(new string[] { });
-	}
-}
+	GENERATED_UCLASS_BODY()
+public:
+	//~ Begin UMaterialExpression Interface
+#if WITH_EDITOR
+	virtual int32 CompilePreview(class FMaterialCompiler* Compiler, int32 OutputIndex) override;
+	virtual int32 Compile(class FMaterialCompiler* Compiler, int32 OutputIndex) override;
+	virtual void GetCaption(TArray<FString>& OutCaptions) const override;
+	virtual uint32 GetOutputType(int32 OutputIndex) override {return MCT_StaticBool;}
+#endif
+	//~ End UMaterialExpression Interface
+};

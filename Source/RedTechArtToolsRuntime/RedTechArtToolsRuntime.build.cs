@@ -45,5 +45,11 @@ public class RedTechArtToolsRuntime : ModuleRules
 			PublicIncludePathModuleNames.AddRange(new string[]{ });
 
 			PrivateIncludePathModuleNames.AddRange(new string[]{ });
+
+			if (Target.bBuildEditor)
+			{
+				PrivateDependencyModuleNames.Add("UnrealEd");
+			}
+
 	}
 }

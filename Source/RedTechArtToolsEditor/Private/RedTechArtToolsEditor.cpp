@@ -21,14 +21,20 @@
 // SOFTWARE.
 
 #include "CoreMinimal.h"
-#include "RedEditorIconWidget.h"
-#include "Modules/ModuleManager.h"
+#include "EditorUtilityBlueprint.h"
+#include "EditorUtilityWidgetBlueprint.h"
+#include "EngineUtils.h"
 #include "IRedTechArtToolsEditor.h"
 #include "ISettingsModule.h"
 #include "RedBPEnum.h"
+#include "RedDeveloperSettings.h"
 #include "RedEditorIconWidget.h"
+#include "Blutility/Classes/EditorUtilityToolMenu.h"
+#include "Blutility/Classes/EditorUtilityWidget.h"
+#include "Blutility/Public/EditorUtilitySubsystem.h"
 #include "Customization/RedBPEnumCustomization.h"
 #include "Customization/RedEditorIconPathCustomization.h"
+#include "Interfaces/IMainFrameModule.h"
 #include "Modules/ModuleManager.h"
 
 #define LOCTEXT_NAMESPACE "RedTechArtTools"
@@ -38,6 +44,9 @@ class FRedTechArtToolsEditor final : public IRedTechArtToolsEditor
 	/** IModuleInterface implementation */
 	virtual void StartupModule() override;
 	virtual void ShutdownModule() override;
+	
+	void MainFrameCreationFinished(TSharedPtr<SWindow> InRootWindow, bool bIsNewProjectWindow) const;
+	void HandleStartup() const;
 };
 
 IMPLEMENT_MODULE(FRedTechArtToolsEditor, RedTechArtToolsEditor)
@@ -52,6 +61,17 @@ void FRedTechArtToolsEditor::StartupModule()
 		FRedBPEnum::StaticStruct()->GetFName(),
 		FOnGetPropertyTypeCustomizationInstance::CreateStatic(&FRedBPEnumCustomization::MakeInstance));
 	PropertyModule.NotifyCustomizationModuleChanged();
+
+	// In StartupModule
+	IMainFrameModule& MainFrameModule = IMainFrameModule::Get();
+	if (MainFrameModule.IsWindowInitialized())
+	{
+		HandleStartup();
+	}
+	else
+	{
+		MainFrameModule.OnMainFrameCreationFinished().AddRaw(this, &FRedTechArtToolsEditor::MainFrameCreationFinished);
+	}
 }
 
 
@@ -70,6 +90,55 @@ void FRedTechArtToolsEditor::ShutdownModule()
 	{
 		SettingsModule->UnregisterSettings("Project", "Plugins", "RedTechArtTools");
 	}
+	
+	IMainFrameModule& MainFrameModule = IMainFrameModule::Get();
+	MainFrameModule.OnMainFrameCreationFinished().RemoveAll(this);
 }
 
+
+void FRedTechArtToolsEditor::HandleStartup() const
+{
+	UEditorUtilitySubsystem* EditorUtilitySubsystem = GEditor->GetEditorSubsystem<UEditorUtilitySubsystem>();
+	TArray<UObject*> LoadedAssets;
+	
+	const URedDeveloperSettings* RedSettings = GetDefault<URedDeveloperSettings>();
+	
+	for( const FString& Path : RedSettings->AutoRegisterUtilityWidgetPaths)
+	{
+		EngineUtils::FindOrLoadAssetsByPath("/RedTechArtTools/EditorWidgets", LoadedAssets, EngineUtils::ATL_Regular);
+	}
+	
+	for(UObject* Object : LoadedAssets)
+	{
+		if(UBlueprint* Blueprint = Cast<UBlueprint>(Object))
+		{
+			if(UClass* Class = Blueprint->GeneratedClass)
+			{
+				UObject* DefaultObject = Class->GetDefaultObject();
+				if(UEditorUtilityToolMenuEntry* Entry = Cast<UEditorUtilityToolMenuEntry>(DefaultObject))
+				{
+					UToolMenus::Get()->AddMenuEntryObject(Entry);
+				}
+				else if(UEditorUtilityWidget* Widget = Cast<UEditorUtilityWidget>(DefaultObject))
+				{
+					if(Widget->ShouldAlwaysReregisterWithWindowsMenu())
+					{
+						if(UEditorUtilityWidgetBlueprint* WidgetBlueprint = Cast<UEditorUtilityWidgetBlueprint>(Blueprint))
+						{
+							FName NewTabId;
+							EditorUtilitySubsystem->RegisterTabAndGetID(WidgetBlueprint, NewTabId);
+						}
+					}
+				}	
+			}
+		}
+	}	
+}
+
+void FRedTechArtToolsEditor::MainFrameCreationFinished(TSharedPtr<SWindow> InRootWindow, bool bIsNewProjectWindow) const
+{
+	HandleStartup();
+	IMainFrameModule& MainFrameModule = IMainFrameModule::Get();
+	MainFrameModule.OnMainFrameCreationFinished().RemoveAll(this);
+}
 #undef LOCTEXT_NAMESPACE
