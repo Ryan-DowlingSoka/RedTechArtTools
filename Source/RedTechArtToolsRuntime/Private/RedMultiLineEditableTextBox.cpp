@@ -39,7 +39,11 @@ TSharedRef<SWidget> URedMultiLineEditableTextBox::RebuildWidget()
 	.Style(&WidgetStyle)
 	.TextStyle(&TextStyle)
 	.AllowContextMenu(AllowContextMenu)
+#if ENGINE_MAJOR_VERSION >= 5 && ENGINE_MINOR_VERSION > 1
 	.IsReadOnly(GetIsReadOnly())
+#else
+	.IsReadOnly(bIsReadOnly)
+#endif
 //		.MinDesiredWidth(MinimumDesiredWidth)
 //		.Padding(Padding)
 //		.IsCaretMovedWhenGainFocus(IsCaretMovedWhenGainFocus)
