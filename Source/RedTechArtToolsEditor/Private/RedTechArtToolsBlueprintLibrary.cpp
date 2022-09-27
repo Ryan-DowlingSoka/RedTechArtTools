@@ -31,6 +31,10 @@
 #include "Misc/ConfigCacheIni.h"
 #include "UObject/PropertyAccessUtil.h"
 
+#if !(ENGINE_MAJOR_VERSION >= 5 && ENGINE_MINOR_VERSION >= 1)
+#include "EditorStyleSet.h"
+#endif
+
 #define LOCTEXT_NAMESPACE "RedTechArtToolsBlueprintLibrary"
 
 /** Output entire contents of a DataTable as a string */
@@ -210,7 +214,7 @@ public:
 		if(Options.bUseDefaultButtons)
 		{
 			SAssignNew(Buttons, SBorder)
-#if ENGINE_MAJOR_VERSION >= 5 && ENGINE_MINOR_VERSION > 1
+#if ENGINE_MAJOR_VERSION >= 5 && ENGINE_MINOR_VERSION >= 1
 				.BorderImage(FAppStyle::GetBrush("ToolPanel.GroupBorder"))
 #else
 				.BorderImage(FEditorStyle::GetBrush("ToolPanel.GroupBorder"))

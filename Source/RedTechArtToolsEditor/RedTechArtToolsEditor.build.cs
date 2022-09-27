@@ -38,6 +38,7 @@ public class RedTechArtToolsEditor : ModuleRules
 			"DeveloperSettings",
 			"EditorFramework",
 			"EditorScriptingUtilities",
+			"EditorStyle",
 			"Engine",
 			"InputCore",
 			"Kismet",

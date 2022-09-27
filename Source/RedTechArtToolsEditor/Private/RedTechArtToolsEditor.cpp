@@ -50,8 +50,6 @@ class FRedTechArtToolsEditor final : public IRedTechArtToolsEditor
 	void HandleStartup() const;
 };
 
-IMPLEMENT_MODULE(FRedTechArtToolsEditor, RedTechArtToolsEditor)
-
 void FRedTechArtToolsEditor::StartupModule()
 {
 	FPropertyEditorModule& PropertyModule = FModuleManager::LoadModuleChecked<FPropertyEditorModule>("PropertyEditor");
@@ -95,7 +93,6 @@ void FRedTechArtToolsEditor::ShutdownModule()
 	IMainFrameModule& MainFrameModule = IMainFrameModule::Get();
 	MainFrameModule.OnMainFrameCreationFinished().RemoveAll(this);
 }
-
 
 void FRedTechArtToolsEditor::HandleStartup() const
 {
@@ -143,3 +140,5 @@ void FRedTechArtToolsEditor::MainFrameCreationFinished(TSharedPtr<SWindow> InRoo
 	MainFrameModule.OnMainFrameCreationFinished().RemoveAll(this);
 }
 #undef LOCTEXT_NAMESPACE
+
+IMPLEMENT_MODULE(FRedTechArtToolsEditor, RedTechArtToolsEditor)
