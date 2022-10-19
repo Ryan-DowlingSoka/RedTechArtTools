@@ -15,19 +15,23 @@ The plugin is not **EnabledByDefault** so you will need to enable it in your pro
 
 ## Current Tools
 
-### Material Parameters Helper Widget v1.0.5
+### [Material Parameters Helper Widget v1.0.5](https://github.com/Ryan-DowlingSoka/RedTechArtTools/wiki/Material-Parameter-Helper)
 
-### Editor Icon Widget
+Helps with the management, naming, default data, and editing of all material parameters inside of a single material, even if the material parameters are spread through many different material functions.
 
-When making Editor Utility Widgets and tools, it is a pain to create your own icons for simple stuff the engine already has. This tool solves that. It is simily a widget that shows a list of all available slate brushes from select folders and provides them for use exactly as UImage.
+### [Editor Icon Widget](https://github.com/Ryan-DowlingSoka/RedTechArtTools/wiki/Editor-Icon-Widget)
 
-![Animated image showing an overview of the features of the Editor Icon Widget.](Documentation/Images/eiw.overview.gif)
+Provides access to all unreal native editor icons in a convenient widget.
 
-The lists of folders is configurable, so if you like working with SVGs you can also add your own folders to the list, and they will be populated. Paths are relative to the /Engine folder. Project paths are untested but probably are accessible by using ../ at the start to get out of the Engine folder.
+### Blueprint Defined Enum Access
 
-![Image showing Project Settings > RED Tech Art Tools > Editor Icon Widget Search Paths](Documentation/Images/eiw.configurations_list.png)
+Hacky class for when things have gotten out of hand. If you have blueprint defined enums in your project and refactoring them is not a reasonable option, this tool (FRedBPEnum) can let you use and manipulate these enums without having to convert them into code, in a slightly better way than the other bad alternatives.
 
-The widget is editor only, use in a runtime widget will fail to cook.
+### Barycentric Coordinate Geometry Script
+
+Small editor utility to add barycentric uvs to set meshes using geometry scripting. Can be useful for creating a wireframe shader on assets and a variety of other effects. Also a good starting point for looking at how geometry scripting can work.
+
+[Blog post on how to make this for yourself and more information on what is going on.](https://ryandowlingsoka.com/Custom-Wireframe-Material-using-Geometry-Scripting-for-Barycentric-UVs-6ef76c1949a84e1193ebabad535b4089)
 
 ### Batch Rename Widget
 
