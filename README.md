@@ -23,7 +23,7 @@ Helps with the management, naming, default data, and editing of all material par
 
 Provides access to all unreal native editor icons in a convenient widget.
 
-### Blueprint Defined Enum Access
+### BP Enum
 
 Hacky class for when things have gotten out of hand. If you have blueprint defined enums in your project and refactoring them is not a reasonable option, this tool (FRedBPEnum) can let you use and manipulate these enums without having to convert them into code, in a slightly better way than the other bad alternatives.
 
