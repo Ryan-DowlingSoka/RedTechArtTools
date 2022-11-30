@@ -36,10 +36,10 @@ TSharedRef<SWidget> URedMultiLineEditableTextBox::RebuildWidget()
 	// but i'm not sure that is possible. >_>
 
 	MyEditableTextBlock = SNew(SMultiLineEditableTextBox)
-	.Style(&WidgetStyle)
-	.TextStyle(&TextStyle)
 	.AllowContextMenu(AllowContextMenu)
+	.Style(&WidgetStyle)
 #if ENGINE_MAJOR_VERSION >= 5 && ENGINE_MINOR_VERSION > 1
+	.TextStyle(&TextStyle);
 	.IsReadOnly(GetIsReadOnly())
 #else
 	.IsReadOnly(bIsReadOnly)
