@@ -30,7 +30,7 @@ void URedEditorIconWidget::SynchronizeProperties()
 {
 	Super::SynchronizeProperties();
 
-#if ENGINE_MAJOR_VERSION == 5 && ENGINE_MINOR_VERSION >= 1
+#if ENGINE_MAJOR_VERSION == 5 && ENGINE_MINOR_VERSION > 1
 	const FSlateBrush& BrushRef = GetBrush();
 #else 
 	const FSlateBrush& BrushRef = Brush;
