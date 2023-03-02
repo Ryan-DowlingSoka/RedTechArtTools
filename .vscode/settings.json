@@ -1,7 +1,7 @@
 {
-    "python.analysis.extraPaths": ["..\\..\\..\\Intermediate\\PythonStub"],
-    "python.autoComplete.extraPaths": ["..\\..\\..\\Intermediate\\PythonStub"],
-    "python.defaultInterpreterPath": "..\\..\\..\\..\\..\\UE_5.0\\Engine\\Binaries\\ThirdParty\\Python3\\Win64\\python.exe",
+    "python.analysis.extraPaths": ["..\\..\\..\\Intermediate\\PythonStub", "E:\\epic\\Projects\\LyraStarterGame\\Intermediate\\PythonStub"],
+    "python.autoComplete.extraPaths": ["..\\..\\..\\Intermediate\\PythonStub", "E:\\epic\\Projects\\LyraStarterGame\\Intermediate\\PythonStub"],
+    "python.defaultInterpreterPath": "E:\\epic\\UE_5.0\\Engine\\Binaries\\ThirdParty\\Python3\\Win64\\python.exe",
     "python.formatting.provider": "black",
     "python.formatting.blackArgs": ["--line-length", "119"],
     "[python]" : {

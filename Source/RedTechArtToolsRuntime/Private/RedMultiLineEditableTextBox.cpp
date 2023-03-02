@@ -38,7 +38,7 @@ TSharedRef<SWidget> URedMultiLineEditableTextBox::RebuildWidget()
 	MyEditableTextBlock = SNew(SMultiLineEditableTextBox)
 	.AllowContextMenu(AllowContextMenu)
 	.Style(&WidgetStyle)
-#if ENGINE_MAJOR_VERSION >= 5 && ENGINE_MINOR_VERSION <= 1
+#if ENGINE_MAJOR_VERSION >= 5 && ENGINE_MINOR_VERSION <= 1 && ENGINE_PATCH_VERSION < 1
 	.TextStyle(&TextStyle);
 #endif
 #if ENGINE_MAJOR_VERSION >= 5 && ENGINE_MINOR_VERSION > 1

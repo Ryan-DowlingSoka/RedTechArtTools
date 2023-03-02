@@ -30,6 +30,7 @@
 #include "GameFramework/GameStateBase.h"
 #include "Misc/ConfigCacheIni.h"
 #include "UObject/PropertyAccessUtil.h"
+#include "Kismet2/BlueprintEditorUtils.h"
 
 #if !(ENGINE_MAJOR_VERSION >= 5 && ENGINE_MINOR_VERSION >= 1)
 #include "EditorStyleSet.h"
@@ -357,6 +358,22 @@ UObject* URedTechArtToolsBlueprintLibrary::GetDefaultObjectFromBlueprint(const U
 	}
 	
 	return nullptr;
+}
+
+TMap<TSoftObjectPtr<AActor>, FReferencingActors> URedTechArtToolsBlueprintLibrary::GetActorReferenceMap(UObject* WorldContextObject, TArray<UClass*>& InClassesToIgnore)
+{
+	TMap<TSoftObjectPtr<AActor>, FReferencingActors> OutReferencingActors;
+	if(UWorld* World = WorldContextObject->GetWorld(); IsValid(World))
+	{
+		TMap<AActor*, TArray<AActor*>> ReferencingActors;
+		FBlueprintEditorUtils::GetActorReferenceMap(World, InClassesToIgnore, ReferencingActors);
+		for(auto It(ReferencingActors.CreateIterator()); It; ++It)
+		{
+			OutReferencingActors.Add(It.Key(), FReferencingActors(It.Key(), It.Value()));
+		}
+	}
+	
+	return OutReferencingActors;
 }
 
 #undef LOCTEXT_NAMESPACE

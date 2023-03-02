@@ -74,4 +74,4 @@ void URedMaterialExpression_IsEditorStaticBool::GetCaption(TArray<FString>& OutC
 }
 #endif // WITH_EDITOR
 
-#undef LOCTEXT
+#undef LOCTEXT_NAMESPACE
