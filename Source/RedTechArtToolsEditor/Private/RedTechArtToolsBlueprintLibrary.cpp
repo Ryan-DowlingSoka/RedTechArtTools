@@ -96,22 +96,22 @@ FString URedTechArtToolsBlueprintLibrary::GetTableAsJSON(const UDataTable* DataT
 	return "";
 }
 
-bool URedTechArtToolsBlueprintLibrary::AlphaNumericLessThan(FString& A, FString& B)
+bool URedTechArtToolsBlueprintLibrary::AlphaNumericLessThan(const FString& A, const  FString& B)
 {
 	return A < B;
 }
 
-bool URedTechArtToolsBlueprintLibrary::AlphaNumericLessThanOrEqual(FString& A, FString& B)
+bool URedTechArtToolsBlueprintLibrary::AlphaNumericLessThanOrEqual(const FString& A, const FString& B)
 {
 	return A <= B;
 }
 
-bool URedTechArtToolsBlueprintLibrary::AlphaNumericGreaterThan(FString& A, FString& B)
+bool URedTechArtToolsBlueprintLibrary::AlphaNumericGreaterThan(const FString& A, const FString& B)
 {
 	return A > B;
 }
 
-bool URedTechArtToolsBlueprintLibrary::AlphaNumericGreaterThanOrEqual(FString& A, FString& B)
+bool URedTechArtToolsBlueprintLibrary::AlphaNumericGreaterThanOrEqual(const FString& A, const FString& B)
 {
 	return A >= B;
 }

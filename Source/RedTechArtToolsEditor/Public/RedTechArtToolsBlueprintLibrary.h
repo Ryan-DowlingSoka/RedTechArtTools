@@ -117,19 +117,19 @@ public:
 
 	/** Is A less than or equal to B alphanumerically. */
 	UFUNCTION(BlueprintCallable, Category=String)
-	static bool AlphaNumericLessThan(UPARAM(ref) FString& A, UPARAM(ref) FString& B);
+	static bool AlphaNumericLessThan(UPARAM(ref) const FString& A, UPARAM(ref) const FString& B);
 
 	/** Is A less than or equal to B alphanumerically. */
 	UFUNCTION(BlueprintCallable, Category=String)
-	static bool AlphaNumericLessThanOrEqual(UPARAM(ref) FString& A, UPARAM(ref) FString& B);
+	static bool AlphaNumericLessThanOrEqual(UPARAM(ref) const FString& A, UPARAM(ref) const FString& B);
 
 	/** Is A less than or equal to B alphanumerically. */
 	UFUNCTION(BlueprintCallable, Category=String)
-	static bool AlphaNumericGreaterThan(UPARAM(ref) FString& A, UPARAM(ref) FString& B);
+	static bool AlphaNumericGreaterThan(UPARAM(ref) const FString& A, UPARAM(ref) const FString& B);
 
 	/** Is A less than or equal to B alphanumerically. */
 	UFUNCTION(BlueprintCallable, Category=String)
-	static bool AlphaNumericGreaterThanOrEqual(UPARAM(ref) FString& A, UPARAM(ref) FString& B);
+	static bool AlphaNumericGreaterThanOrEqual(UPARAM(ref) const FString& A, UPARAM(ref) const FString& B);
 
 	/** Opens a modal content picker for a content directory. */
 	UFUNCTION(BlueprintCallable, Category=EditorScripting)
