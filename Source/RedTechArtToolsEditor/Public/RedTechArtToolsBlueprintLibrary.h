@@ -37,10 +37,10 @@ struct REDTECHARTTOOLSEDITOR_API FReferencingActors
 {
 	GENERATED_BODY()
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=ReferencingActors)
 	TSoftObjectPtr<AActor> ReferencedActor;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=ReferencingActors)
 	TArray<TSoftObjectPtr<AActor>> Actors;
 
 	
