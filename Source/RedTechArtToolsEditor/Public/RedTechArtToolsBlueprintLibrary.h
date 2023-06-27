@@ -31,6 +31,30 @@ class UDataTable;
 
 #define LOCTEXT_NAMESPACE "RedTechArtToolsBlueprintLibrary"
 
+/** Array of referencing actors as soft object ptrs.*/
+USTRUCT(BlueprintType)
+struct REDTECHARTTOOLSEDITOR_API FReferencingActors
+{
+	GENERATED_BODY()
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=ReferencingActors)
+	TSoftObjectPtr<AActor> ReferencedActor;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=ReferencingActors)
+	TArray<TSoftObjectPtr<AActor>> Actors;
+
+	
+	FReferencingActors(){}
+	FReferencingActors(AActor* InReferencedActor, TArray<AActor*>& InActors)
+	{
+		ReferencedActor = InReferencedActor;
+		for(TSoftObjectPtr<AActor> Actor : InActors)
+		{
+			Actors.Add(Actor);
+		}
+	}
+};
+
 /** Window options for the ShowWidgetDialog blueprint function.*/
 USTRUCT(BlueprintType)
 struct REDTECHARTTOOLSEDITOR_API FShowWidgetDialogOptions
@@ -145,6 +169,11 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = EditorScripting)
 	static UObject* GetDefaultObjectFromBlueprint(const UObject* Blueprint);
+
+	/** A blueprint compatible wrapper for FBlueprintEditorUtils::GetActorReferenceMap(World, InClassesToIgnore, ReferencingActors); If using C++, use that instead.*/
+	UFUNCTION(BlueprintCallable, Category = EditorScripting, meta=(WorldContext=WorldContextObject, AutoCreateRefTerm=InClassesToIgnore))
+	static TMap<TSoftObjectPtr<AActor>, FReferencingActors> GetActorReferenceMap(UObject* WorldContextObject, UPARAM(ref) TArray<UClass*>& InClassesToIgnore);
+	
 };
 
 #undef LOCTEXT_NAMESPACE
