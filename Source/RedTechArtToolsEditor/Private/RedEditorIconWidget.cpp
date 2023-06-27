@@ -24,7 +24,8 @@
 
 #include "Brushes/SlateImageBrush.h"
 #include "Components/Image.h"
-
+#include "HAL/FileManager.h"
+#include "Launch/Resources/Version.h"
 
 void URedEditorIconWidget::SynchronizeProperties()
 {
@@ -32,10 +33,10 @@ void URedEditorIconWidget::SynchronizeProperties()
 
 #if ENGINE_MAJOR_VERSION == 5 && ENGINE_MINOR_VERSION > 1
 	const FSlateBrush& BrushRef = GetBrush();
-#else 
+#else
 	const FSlateBrush& BrushRef = Brush;
 #endif
-	
+
 	if (!IconPath.Path.IsEmpty() && IFileManager::Get().FileExists(*FPaths::ConvertRelativePathToFull(*IconPath.Path)))
 	{
 		if (const FString Ext = FPaths::GetExtension(IconPath.Path); Ext == "svg")

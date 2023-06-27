@@ -21,13 +21,15 @@
 // SOFTWARE.
 
 #include "RedMultiLineEditableTextBox.h"
+#include "Launch/Resources/Version.h"
 
 #include "Widgets/Input/SMultiLineEditableTextBox.h"
 
 URedMultiLineEditableTextBox::URedMultiLineEditableTextBox(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
-	, bShiftEnterForNewLine(true)
-{};
+	  , bShiftEnterForNewLine(true)
+{
+};
 
 TSharedRef<SWidget> URedMultiLineEditableTextBox::RebuildWidget()
 {
@@ -41,23 +43,23 @@ TSharedRef<SWidget> URedMultiLineEditableTextBox::RebuildWidget()
 #if ENGINE_MAJOR_VERSION >= 5 && ENGINE_MINOR_VERSION <= 1 && ENGINE_PATCH_VERSION < 1
 	.TextStyle(&TextStyle);
 #endif
-#if ENGINE_MAJOR_VERSION >= 5 && ENGINE_MINOR_VERSION > 1
-	.IsReadOnly(GetIsReadOnly())
+#if ENGINE_MAJOR_VERSION >= 5 && ENGINE_MINOR_VERSION >= 1
+		.IsReadOnly(GetIsReadOnly())
 #else
 	.IsReadOnly(bIsReadOnly)
 #endif
-//		.MinDesiredWidth(MinimumDesiredWidth)
-//		.Padding(Padding)
-//		.IsCaretMovedWhenGainFocus(IsCaretMovedWhenGainFocus)
-//		.SelectAllTextWhenFocused(SelectAllTextWhenFocused)
-//		.RevertTextOnEscape(RevertTextOnEscape)
-//		.ClearKeyboardFocusOnCommit(ClearKeyboardFocusOnCommit)
-//		.SelectAllTextOnCommit(SelectAllTextOnCommit)
-	.VirtualKeyboardOptions(VirtualKeyboardOptions)
-	.VirtualKeyboardDismissAction(VirtualKeyboardDismissAction)
-	.OnTextChanged(BIND_UOBJECT_DELEGATE(FOnTextChanged, HandleOnTextChanged))
-	.OnTextCommitted(BIND_UOBJECT_DELEGATE(FOnTextCommitted, HandleOnTextCommitted))
-	.ModiferKeyForNewLine(bShiftEnterForNewLine ? EModifierKey::Shift : EModifierKey::None);
+		//		.MinDesiredWidth(MinimumDesiredWidth)
+		//		.Padding(Padding)
+		//		.IsCaretMovedWhenGainFocus(IsCaretMovedWhenGainFocus)
+		//		.SelectAllTextWhenFocused(SelectAllTextWhenFocused)
+		//		.RevertTextOnEscape(RevertTextOnEscape)
+		//		.ClearKeyboardFocusOnCommit(ClearKeyboardFocusOnCommit)
+		//		.SelectAllTextOnCommit(SelectAllTextOnCommit)
+		.VirtualKeyboardOptions(VirtualKeyboardOptions)
+		.VirtualKeyboardDismissAction(VirtualKeyboardDismissAction)
+		.OnTextChanged(BIND_UOBJECT_DELEGATE(FOnTextChanged, HandleOnTextChanged))
+		.OnTextCommitted(BIND_UOBJECT_DELEGATE(FOnTextCommitted, HandleOnTextCommitted))
+		.ModiferKeyForNewLine(bShiftEnterForNewLine ? EModifierKey::Shift : EModifierKey::None);
 
 	return MyEditableTextBlock.ToSharedRef();
 }
