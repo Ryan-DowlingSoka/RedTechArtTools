@@ -23,6 +23,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Kismet/BlueprintFunctionLibrary.h"
 #include "RedBPEnum.generated.h"
 
 #define LOCTEXT_NAMESPACE "RedBPEnum"
