@@ -31,8 +31,10 @@ Hacky class for when things have gotten out of hand. If you have blueprint defin
 
 Small editor utility to add barycentric uvs to set meshes using geometry scripting. Can be useful for creating a wireframe shader on assets and a variety of other effects. Also a good starting point for looking at how geometry scripting can work.
 
-[Blog post on how to make this for yourself and more information on what is going on.](https://ryandowlingsoka.com/Custom-Wireframe-Material-using-Geometry-Scripting-for-Barycentric-UVs-6ef76c1949a84e1193ebabad535b4089)
+[Blog post on how to make this for yourself and more information on what is going on.](https://ryandowlingsoka.com/unreal/wireframe-barycentric-coords/)
 
 ### Batch Rename Widget
 
-todo
+Editor utility to add batch renaming of actors and assets through a right click menu.
+
+[Tutorial series on how you can make your own batch rename widget and how it works.](https://ryandowlingsoka.com/unreal/batch-rename-tool/)
