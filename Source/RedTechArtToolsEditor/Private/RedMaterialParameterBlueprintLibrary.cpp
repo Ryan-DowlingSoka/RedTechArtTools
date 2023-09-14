@@ -39,24 +39,30 @@
 
 bool URedMaterialParameterBlueprintLibrary::OpenAndFocusMaterialExpression(UMaterialExpression* MaterialExpression)
 {
-	if (UObject* OwningObject = GetMaterialExpression_OwningObject(MaterialExpression))
+	UAssetEditorSubsystem* AssetEditorSubsystem = GEditor->GetEditorSubsystem<UAssetEditorSubsystem>();
+	if(!IsValid(AssetEditorSubsystem))
+		return false;
+
+	UObject* OwningObject = GetMaterialExpression_OwningObject(MaterialExpression);
+	if(!IsValid(OwningObject))
+		return false;
+	
+	if (!AssetEditorSubsystem->OpenEditorForAsset(OwningObject))
+		return false;
+
+	const auto MaterialEditorInstance = StaticCastSharedPtr<IMaterialEditor>(
+		FToolkitManager::Get().FindEditorForAsset(OwningObject));
+
+	if(!MaterialEditorInstance.IsValid())
+		return false;
+	
+	MaterialEditorInstance->FocusWindow(OwningObject);
+	if(IsValid(MaterialExpression->GraphNode) || MaterialExpression->bIsParameterExpression)
 	{
-		if (auto* AssetEditorSubsystem = GEditor->GetEditorSubsystem<UAssetEditorSubsystem>())
-		{
-			if (AssetEditorSubsystem->OpenEditorForAsset(OwningObject))
-			{
-				if (const auto MaterialEditorInstance = StaticCastSharedPtr<IMaterialEditor>(
-					FToolkitManager::Get().FindEditorForAsset(OwningObject)))
-				{
-					MaterialEditorInstance->FocusWindow(OwningObject);
-					if(IsValid(MaterialExpression->GraphNode) || MaterialExpression->bIsParameterExpression)
-					{
-						MaterialEditorInstance->JumpToExpression(MaterialExpression);
-					}
-				}
-			}
-		}
+		MaterialEditorInstance->JumpToExpression(MaterialExpression);
+		return true;
 	}
+
 	return false;
 }
 
