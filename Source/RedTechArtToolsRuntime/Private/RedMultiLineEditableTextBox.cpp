@@ -21,7 +21,7 @@
 // SOFTWARE.
 
 #include "RedMultiLineEditableTextBox.h"
-#include "Launch/Resources/Version.h"
+#include "Misc/EngineVersion.h"
 
 #include "Widgets/Input/SMultiLineEditableTextBox.h"
 

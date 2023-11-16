@@ -74,7 +74,7 @@ void FRedBPEnumCustomization::CustomizeHeader(TSharedRef<IPropertyHandle> Struct
 		[
 			SAssignNew(CachedSearchableComboBox,SSearchableComboBox)
 			.OptionsSource(GetEnumOptions(CurrentValue->GetEnum()))
-			.OnComboBoxOpening_Lambda([=](){GetEnumOptions(CurrentValue->GetEnum());CachedSearchableComboBox->RefreshOptions();})
+			.OnComboBoxOpening_Lambda([=, this](){GetEnumOptions(CurrentValue->GetEnum());CachedSearchableComboBox->RefreshOptions();})
 			.OnSelectionChanged_Lambda([=](const TSharedPtr<FString> NewChoice, ESelectInfo::Type SelectType)
 						                 {
 											 const UEnum* Enum = CurrentValue->GetEnum();
@@ -142,7 +142,7 @@ void FRedBPEnumCustomization::CustomizeChildren(TSharedRef<IPropertyHandle> Stru
 			GET_MEMBER_NAME_CHECKED(FRedBPEnum, SourceEnum)
 		);
 
-		SourceEnumHandle->SetOnPropertyValueChanged(FSimpleDelegate::CreateLambda([=]()
+		SourceEnumHandle->SetOnPropertyValueChanged(FSimpleDelegate::CreateLambda([=, this]()
 		{
 			CachedSearchableComboBox->RefreshOptions();
 			CurrentValue->SetEnum(CurrentValue->SourceEnum);

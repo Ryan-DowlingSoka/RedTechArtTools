@@ -25,7 +25,7 @@
 #include "Brushes/SlateImageBrush.h"
 #include "Components/Image.h"
 #include "HAL/FileManager.h"
-#include "Launch/Resources/Version.h"
+#include "Misc/EngineVersion.h"
 
 void URedEditorIconWidget::SynchronizeProperties()
 {
