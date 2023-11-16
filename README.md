@@ -2,7 +2,7 @@
 
 Unreal Engine 5 Plugin for a variety of Tech Art Tools and features.
 
-Compatible with Unreal Engine verion 5.2.1+ (See other branches for other engine versions. Not all features will be supported on all versions.)
+Compatible with Unreal Engine verion 5.4.0+ (See other branches for other engine versions. Not all features will be supported on all versions.)
 
 ## Installation
 
