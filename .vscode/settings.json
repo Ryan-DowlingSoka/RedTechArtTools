@@ -1,14 +1,13 @@
 {
-    "python.analysis.extraPaths": ["..\\..\\..\\Intermediate\\PythonStub", "E:\\epic\\Projects\\LyraStarterGame\\Intermediate\\PythonStub"],
-    "python.autoComplete.extraPaths": ["..\\..\\..\\Intermediate\\PythonStub", "E:\\epic\\Projects\\LyraStarterGame\\Intermediate\\PythonStub"],
-    "python.defaultInterpreterPath": "E:\\epic\\UE_5.0\\Engine\\Binaries\\ThirdParty\\Python3\\Win64\\python.exe",
-    "python.formatting.provider": "black",
-    "python.formatting.blackArgs": ["--line-length", "119"],
+    "python.analysis.extraPaths": ["..\\..\\Intermediate\\PythonStub"],
+    "python.autoComplete.extraPaths": ["..\\..\\Intermediate\\PythonStub"],
+    "python.defaultInterpreterPath": "..\\..\\..\\Engine\\Binaries\\ThirdParty\\Python3\\Win64\\python.exe",
     "[python]" : {
         "editor.defaultFormatter": null,
         "editor.insertSpaces": true,
         "editor.tabSize": 4,
         "editor.formatOnSave": true
     },
-    "python.analysis.typeCheckingMode": "basic"
+    "python.analysis.typeCheckingMode": "basic",
+    "black-formatter.args": ["--line-length", "119"],
 }

@@ -1,0 +1,9 @@
+{
+    "recommendations": [
+        "ms-python.pylint",
+        "matangover.mypy",
+        "ms-python.isort",
+        "rioj7.command-variable",
+        "ms-python.black-formatter"
+    ]
+}
