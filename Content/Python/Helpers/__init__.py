@@ -1,4 +1,4 @@
-# Copyright (c) 2022 Ryan DowlingSoka - MIT License - See LICENSE file for more.
+# Copyright (c) 2022 Ryan DowlingSoka - MIT License
 
 """Helper module for misc utilities."""
 
