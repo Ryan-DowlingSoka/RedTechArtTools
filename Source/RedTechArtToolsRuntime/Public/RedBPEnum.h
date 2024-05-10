@@ -24,6 +24,10 @@
 
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
+#include "Misc/EngineVersionComparison.h"
+#if UE_VERSION_NEWER_THAN(5,4,0)
+#include "Blueprint/BlueprintExceptionInfo.h"
+#endif
 #include "RedBPEnum.generated.h"
 
 #define LOCTEXT_NAMESPACE "RedBPEnum"
